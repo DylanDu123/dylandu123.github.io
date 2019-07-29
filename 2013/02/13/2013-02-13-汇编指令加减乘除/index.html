@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="汇编,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="ADD加法，将源操作数、目的操作数相加，结果存放在目的操作数中。操作数尺寸必须一致。    OF DF IF SF ZF AF PF CF     *   * * * * *    ADC带进位加，将源操作数、目的操作数和进位标志相加。操作数尺寸必须一致    OF DF IF SF ZF AF PF CF     *   * * * * *    SUB减法，从目的操作数中减去源操作数    O">
+<meta name="keywords" content="汇编">
+<meta property="og:type" content="article">
+<meta property="og:title" content="汇编指令加减乘除">
+<meta property="og:url" content="https://dylandu123.github.io/2013/02/13/2013-02-13-汇编指令加减乘除/index.html">
+<meta property="og:site_name" content="勤能补拙">
+<meta property="og:description" content="ADD加法，将源操作数、目的操作数相加，结果存放在目的操作数中。操作数尺寸必须一致。    OF DF IF SF ZF AF PF CF     *   * * * * *    ADC带进位加，将源操作数、目的操作数和进位标志相加。操作数尺寸必须一致    OF DF IF SF ZF AF PF CF     *   * * * * *    SUB减法，从目的操作数中减去源操作数    O">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-25T12:47:20.965Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="汇编指令加减乘除">
+<meta name="twitter:description" content="ADD加法，将源操作数、目的操作数相加，结果存放在目的操作数中。操作数尺寸必须一致。    OF DF IF SF ZF AF PF CF     *   * * * * *    ADC带进位加，将源操作数、目的操作数和进位标志相加。操作数尺寸必须一致    OF DF IF SF ZF AF PF CF     *   * * * * *    SUB减法，从目的操作数中减去源操作数    O">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dylandu123.github.io/2013/02/13/2013-02-13-汇编指令加减乘除/">
+
+
+
+
+
+  <title>汇编指令加减乘除 | 勤能补拙</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">勤能补拙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">这是一个简单的小博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2013/02/13/2013-02-13-汇编指令加减乘除/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dylan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="勤能补拙">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">汇编指令加减乘除</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-13T21:46:41+08:00">
+                2013-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h1><pre><code>加法，将源操作数、目的操作数相加，结果存放在目的操作数中。操作数尺寸必须一致。
+</code></pre><table>
+<thead>
+<tr>
+<th>OF</th>
+<th>DF</th>
+<th>IF</th>
+<th>SF</th>
+<th>ZF</th>
+<th>AF</th>
+<th>PF</th>
+<th>CF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td></td>
+<td></td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+</tr>
+</tbody>
+</table>
+<h1 id="ADC"><a href="#ADC" class="headerlink" title="ADC"></a>ADC</h1><pre><code>带进位加，将源操作数、目的操作数和进位标志相加。操作数尺寸必须一致
+</code></pre><table>
+<thead>
+<tr>
+<th>OF</th>
+<th>DF</th>
+<th>IF</th>
+<th>SF</th>
+<th>ZF</th>
+<th>AF</th>
+<th>PF</th>
+<th>CF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td></td>
+<td></td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+</tr>
+</tbody>
+</table>
+<h1 id="SUB"><a href="#SUB" class="headerlink" title="SUB"></a>SUB</h1><pre><code>减法，从目的操作数中减去源操作数
+</code></pre><table>
+<thead>
+<tr>
+<th>OF</th>
+<th>DF</th>
+<th>IF</th>
+<th>SF</th>
+<th>ZF</th>
+<th>AF</th>
+<th>PF</th>
+<th>CF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td></td>
+<td></td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+</tr>
+</tbody>
+</table>
+<h1 id="SBB"><a href="#SBB" class="headerlink" title="SBB"></a>SBB</h1><pre><code>带进位减，从源操作数减去目的操作数，然后再减去进位标志值。
+</code></pre><table>
+<thead>
+<tr>
+<th>OF</th>
+<th>DF</th>
+<th>IF</th>
+<th>SF</th>
+<th>ZF</th>
+<th>AF</th>
+<th>PF</th>
+<th>CF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td></td>
+<td></td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+<td>*</td>
+</tr>
+</tbody>
+</table>
+<h1 id="MUL"><a href="#MUL" class="headerlink" title="MUL"></a>MUL</h1><pre><code>无符号整数乘法。将AL/AX/EAX与源操作数相乘，如果源操作数是8位的，则与AL相乘，积存储在AX中；如果源操作数是16位的，则与AX相乘，积存储在EAX中；如果源操作数是32位的，则与EAX相乘，积存储在EDX:EAX中。
+</code></pre><table>
+<thead>
+<tr>
+<th>OF</th>
+<th>DF</th>
+<th>IF</th>
+<th>SF</th>
+<th>ZF</th>
+<th>AF</th>
+<th>PF</th>
+<th>CF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td></td>
+<td></td>
+<td>？</td>
+<td>？</td>
+<td>？</td>
+<td>？</td>
+<td>*</td>
+</tr>
+</tbody>
+</table>
+<h1 id="IMUL"><a href="#IMUL" class="headerlink" title="IMUL"></a>IMUL</h1><pre><code>有符号整数乘法。执行8位/16位/32位的有符号整数乘法操作。如果乘数是8位的，被乘数是AL，积在AX中；如果乘数是16位的，被乘数是AX，积在DX:AX中；如果乘数是32位的，被乘数是EAX，积在EDX:EAX中。如果16位的积扩展到AH，32位的积扩展到DX，或者64位的积扩展到EDX中，则进位和溢出标志置位。
+</code></pre><table>
+<thead>
+<tr>
+<th>OF</th>
+<th>DF</th>
+<th>IF</th>
+<th>SF</th>
+<th>ZF</th>
+<th>AF</th>
+<th>PF</th>
+<th>CF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td></td>
+<td></td>
+<td>？</td>
+<td>？</td>
+<td>？</td>
+<td>？</td>
+<td>*</td>
+</tr>
+</tbody>
+</table>
+<h1 id="DIV"><a href="#DIV" class="headerlink" title="DIV"></a>DIV</h1><pre><code>无符号整数除法。执行8位/16位/32位的无符号整数除法操作。如果除数是8位的，被除数是AX，商在AL中，余数在AH中；如果除数是16位的，被除数是DX:AX，商在AX中，余数在DX中；如果除数是32位的，被除数是EDX:EAX，商在EAX中，余数在EDX中。
+</code></pre><table>
+<thead>
+<tr>
+<th>OF</th>
+<th>DF</th>
+<th>IF</th>
+<th>SF</th>
+<th>ZF</th>
+<th>AF</th>
+<th>PF</th>
+<th>CF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>？</td>
+<td></td>
+<td></td>
+<td>？</td>
+<td>？</td>
+<td>？</td>
+<td>？</td>
+<td>？</td>
+</tr>
+</tbody>
+</table>
+<h1 id="IDIV"><a href="#IDIV" class="headerlink" title="IDIV"></a>IDIV</h1><pre><code>有符号整数除法。执行8位/16位/32位的有符号整数除法操作。如果除数是8位的，被除数是AX，商在AL中，余数在AH中；如果除数是16位的，被除数是DX:AX，商在AX中，余数在DX中；如果除数是32位的，被除数是EDX:EAX，商在EAX中，余数在EDX中。通常在执行IDV指令之前要使用CBW或CWD对除数进行符号扩展。
+</code></pre><table>
+<thead>
+<tr>
+<th>OF</th>
+<th>DF</th>
+<th>IF</th>
+<th>SF</th>
+<th>ZF</th>
+<th>AF</th>
+<th>PF</th>
+<th>CF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>？</td>
+<td></td>
+<td></td>
+<td>？</td>
+<td>？</td>
+<td>？</td>
+<td>？</td>
+<td>？</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/汇编/" rel="tag"># 汇编</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/02/10/2013-02-10-检测点6-1/" rel="next" title="检测点6.1">
+                <i class="fa fa-chevron-left"></i> 检测点6.1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/02/13/2013-02-13-汇编指令db-dw-dd-df-dq-dt的区别/" rel="prev" title="汇编指令db,dw,dd,df,dq,dt的区别">
+                汇编指令db,dw,dd,df,dq,dt的区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Dylan">
+          <p class="site-author-name" itemprop="name">Dylan</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ADD"><span class="nav-number">1.</span> <span class="nav-text">ADD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ADC"><span class="nav-number">2.</span> <span class="nav-text">ADC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SUB"><span class="nav-number">3.</span> <span class="nav-text">SUB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SBB"><span class="nav-number">4.</span> <span class="nav-text">SBB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MUL"><span class="nav-number">5.</span> <span class="nav-text">MUL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IMUL"><span class="nav-number">6.</span> <span class="nav-text">IMUL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DIV"><span class="nav-number">7.</span> <span class="nav-text">DIV</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IDIV"><span class="nav-number">8.</span> <span class="nav-text">IDIV</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dylan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

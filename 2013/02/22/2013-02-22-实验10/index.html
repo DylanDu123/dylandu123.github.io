@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="汇编,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="1 显示字符串问题显示字符串是现实工作中经常要用到的功能，应该编写一个通用的子程序来实现这个功能。我们应该提供灵活的调用接口，使调用者可以界定现实的位置（行、列）、内容和颜色。 子程序描述名称：show_str功能：在指定的位置，用指定的颜色，显示一个用0结束的字符串。参数：(dh)=行号(取值范围0～24)，(dl)=列号(取值范围0～79)，          (cl)=颜色，ds:si指向字">
+<meta name="keywords" content="汇编">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实验10">
+<meta property="og:url" content="https://dylandu123.github.io/2013/02/22/2013-02-22-实验10/index.html">
+<meta property="og:site_name" content="勤能补拙">
+<meta property="og:description" content="1 显示字符串问题显示字符串是现实工作中经常要用到的功能，应该编写一个通用的子程序来实现这个功能。我们应该提供灵活的调用接口，使调用者可以界定现实的位置（行、列）、内容和颜色。 子程序描述名称：show_str功能：在指定的位置，用指定的颜色，显示一个用0结束的字符串。参数：(dh)=行号(取值范围0～24)，(dl)=列号(取值范围0～79)，          (cl)=颜色，ds:si指向字">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://dylandu123.github.io/2013/02/22/2013-02-22-实验10/Jietu20190622-172647.jpg">
+<meta property="og:updated_time" content="2019-07-25T12:47:20.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实验10">
+<meta name="twitter:description" content="1 显示字符串问题显示字符串是现实工作中经常要用到的功能，应该编写一个通用的子程序来实现这个功能。我们应该提供灵活的调用接口，使调用者可以界定现实的位置（行、列）、内容和颜色。 子程序描述名称：show_str功能：在指定的位置，用指定的颜色，显示一个用0结束的字符串。参数：(dh)=行号(取值范围0～24)，(dl)=列号(取值范围0～79)，          (cl)=颜色，ds:si指向字">
+<meta name="twitter:image" content="https://dylandu123.github.io/2013/02/22/2013-02-22-实验10/Jietu20190622-172647.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dylandu123.github.io/2013/02/22/2013-02-22-实验10/">
+
+
+
+
+
+  <title>实验10 | 勤能补拙</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">勤能补拙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">这是一个简单的小博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2013/02/22/2013-02-22-实验10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dylan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="勤能补拙">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">实验10</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-22T17:01:33+08:00">
+                2013-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-显示字符串"><a href="#1-显示字符串" class="headerlink" title="1 显示字符串"></a>1 显示字符串</h2><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>显示字符串是现实工作中经常要用到的功能，应该编写一个通用的子程序来实现这个功能。我们应该提供灵活的调用接口，使调用者可以界定现实的位置（行、列）、内容和颜色。</p>
+<h4 id="子程序描述"><a href="#子程序描述" class="headerlink" title="子程序描述"></a>子程序描述</h4><p>名称：show_str<br>功能：在指定的位置，用指定的颜色，显示一个用0结束的字符串。<br>参数：(dh)=行号(取值范围0～24)，(dl)=列号(取值范围0～79)，<br>          (cl)=颜色，ds:si指向字符串的首地址<br>返回：无<br>应用举例：在屏幕的8行3列，用绿色显示data段中的字符串。 </p>
+<h4 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h4><p>（1）子程序的入口参数是屏幕上的行号和列号，注意在子程序内部要将它们转化为显存中的地址，首先在分析一下屏幕上的行列位置和显存地址的对应关系;(参见：王爽《汇编语言》实验9)<br>（2）注意保存子程序中用到的相关寄存器<br>（3）这个子程序的内部处理和显存的结构密切相关，但是向外提供了显存结构无关的接口。通过调用这个子程序，进行字符串的显示时可以不必了解显存的结构，为编程提供了方便。在实验中，注意体会这种设计思想。</p>
+<pre><code>assume cs:code
+    data segment
+        db &apos;Welcome to masm!&apos;,0
+    data ends
+
+    code segment
+    start: 
+        mov dh,8          ; 行数
+        mov dl,3          ; 列数
+        mov cl,2          ; 绿色
+        mov ax,data
+        mov ds,ax
+        mov si,0          ; 数据
+        call show_str
+
+        mov ax,4c00h
+        int 21h
+    show_str:
+        mov ax,0b800h 
+        mov es,ax
+        ; 计算行的开始位置
+        mov al,160
+        mul dh
+        mov bx,ax 
+        ; 计算列的开始位置
+        mov al,2
+        mul dl
+        add bx,ax
+        ; 保留颜色值
+        mov dl,cl
+    loop_str:    
+        ; 取得显示字符
+        mov cl,ds:[si]
+        ; 设置显示颜色
+        mov ch,dl
+        ; 将字符写入显存
+        mov es:[bx],cx
+        mov ch,0
+        jcxz ok
+        inc si
+        add bx,2
+        loop loop_str
+    ok:        
+        ret
+    code ends
+    end start
+</code></pre><h2 id="2-解决除法溢出问题"><a href="#2-解决除法溢出问题" class="headerlink" title="2 解决除法溢出问题"></a>2 解决除法溢出问题</h2><h4 id="子程序描述-1"><a href="#子程序描述-1" class="headerlink" title="子程序描述"></a>子程序描述</h4><p>名称：divdw<br>功能：进行不会产生溢出的除法运算，被除数为dword型，除数为word型，结果为dword型。<br>参数：(ax)=dword型数据的低16位<br>          (dx)=dword型数据的高16位<br>          (cx)=除数<br>返回：(dx)=结果的高16位，(ax)=结果的低16位<br>          (cx)=余数<br>应用举例：计算1000000/10(FA240H/0AH) </p>
+<h4 id="提示-1"><a href="#提示-1" class="headerlink" title="提示"></a>提示</h4><p>结出一个公式：<br>X： 被除数，范围：[0，FFFFFFFF]<br>N： 除数，范围：[0，FFFF]<br>H： X高16位，范围：[0，FFFF]<br>L： X低16位，范围：[0，FFFF]<br>int()：描述性运算符，取商，比如：int(38/10)=3<br>rem()：描述性运算符，取余数，比如：rem(38/10)=8<br>公式：X/N=int(H/N)<em>65536+[rem(H/N)</em>65536+L]/N<br>这里的65536为10000H,也就是说，int(H/N)<em>10000H为高16位的商，而[rem(H/N)</em>65536+L]/N得到的是低16位的商和余数；<br>这个公式将可能产生溢出的除法运算：X/N，转变为多个不会产生溢出的除法运算公式中，等号右边的所有除法运算都可以用div指令来做，肯定不会导致溢出。</p>
+<pre><code>assume cs:code
+code segment
+start: 
+    mov ax,04240H     ;设置被除数
+    mov dx,000FH    
+    mov cx,0AH        ;设置除数
+    call divdw
+
+    mov ax,4c00h
+    int 21h
+
+; 功能：进行不会产生溢出的除法运算，被除数为dword型，除数为word型，结果为dword型
+; 参数：(ax)=dword型数据的低16位
+;       (dx)=dword型数据的高16位
+;       (cx)=除数
+; 返回：(dx)=结果的高16位，(ax)=结果的低16位
+;       (cx)=余数
+;如果除数是16位的，被除数是DX:AX，商在AX中，余数在DX中
+divdw: 
+
+    ;保存低位
+    mov bx,ax
+    ;计算高位的商
+    mov ax,dx
+    mov dx,0
+    div cx
+    ;记录 高位的商
+    mov si,ax
+
+    mov ax,bx
+    ;请注意 这时 商在ax 中 余数在dx中
+    ;余数dx 和 新赋值进来的 低位 ax 正好符合 [rem(H/N)*65536 + L]
+    div cx
+    mov cx,dx
+    mov dx,si
+    ret
+code ends
+end start
+</code></pre><h2 id="3-数值显示"><a href="#3-数值显示" class="headerlink" title="3 数值显示"></a>3 数值显示</h2><h4 id="子程序描述-2"><a href="#子程序描述-2" class="headerlink" title="子程序描述"></a>子程序描述</h4><p>名称：dtoc<br>功能：将word型数据转变为表示十进制数的字符串，字符串以10为结尾符。<br>参数：(ax)=word型数据,ds:si指向字符串首地址<br>返回：无<br>应用举例：编程，将数据12666以十进制的形式在屏幕的8行3列，用绿色显示出来。在显示时我们调用本次实验中的第一个子程序show_str.<br>提示<br>0~9的ASCII码为30H~39H，则先由十六进制转化为十进制，再转ACSII码，转换示意图如下：<br><img src="/2013/02/22/2013-02-22-实验10/Jietu20190622-172647.jpg" alt="图片3.6"><br>同时要注意，依次得到的是个位，十位，百位……万位这与我们习惯的从左到右的万位……个位顺序颠倒</p>
+<pre><code>assume cs:code
+    data segment
+        db 10 dup (0)
+    data ends
+
+    code segment
+    start: 
+        mov ax,data
+        mov ds,ax
+
+        call dtoc
+
+        mov dh,8          ; 行数
+        mov dl,3          ; 列数
+        mov cl,2          ; 绿色
+        mov si,1          ; 数据
+        call show_str
+        mov ax,4c00h
+        int 21h
+
+    dtoc:
+        mov ax,12666
+        mov cx,5
+    c:     mov bx,10
+        mov dx,0
+        div bx
+        mov bx,cx
+        add dl,30h
+        mov ds:[bx],dl
+        loop c
+        ret
+    show_str:
+        mov ax,0b800h 
+        mov es,ax
+        ; 计算行的开始位置
+        mov al,160
+        mul dh
+        mov bx,ax 
+        ; 计算列的开始位置
+        mov al,2
+        mul dl
+        add bx,ax
+        ; 保留颜色值
+        mov dl,cl
+    loop_str:    
+        ; 取得显示字符
+        mov cl,ds:[si]
+        ; 设置显示颜色
+        mov ch,dl
+        ; 将字符写入显存
+        mov es:[bx],cx
+        mov ch,0
+        jcxz ok
+        inc si
+        add bx,2
+        loop loop_str
+    ok:        
+        ret
+    code ends
+    end start
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/汇编/" rel="tag"># 汇编</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/02/22/2013-02-22-检测点第10章/" rel="next" title="检测点第10章">
+                <i class="fa fa-chevron-left"></i> 检测点第10章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/02/23/2013-02-23-检测点11-1/" rel="prev" title="检测点11.1">
+                检测点11.1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Dylan">
+          <p class="site-author-name" itemprop="name">Dylan</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-显示字符串"><span class="nav-number">1.</span> <span class="nav-text">1 显示字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">1.0.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子程序描述"><span class="nav-number">1.0.2.</span> <span class="nav-text">子程序描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提示"><span class="nav-number">1.0.3.</span> <span class="nav-text">提示</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#2-解决除法溢出问题"><span class="nav-number">2.</span> <span class="nav-text">2 解决除法溢出问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#子程序描述-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">子程序描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提示-1"><span class="nav-number">2.0.2.</span> <span class="nav-text">提示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-数值显示"><span class="nav-number">3.</span> <span class="nav-text">3 数值显示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#子程序描述-2"><span class="nav-number">3.0.1.</span> <span class="nav-text">子程序描述</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dylan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

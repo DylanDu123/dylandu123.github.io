@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="工具,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="参考文章Mathjax入门指南MathjaxMarkDown 插入数学公式实验大集合HEXO指南  Mathjax 导入如果要使用 Mathjax 引擎的话，需要引入脚本。将下面的代码引入 MD 文件内部。 &amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;http://cdn.mathjax.org/mathjax/latest/Mat">
+<meta name="keywords" content="工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MarkDown插入数学公式">
+<meta property="og:url" content="https://dylandu123.github.io/2019/07/05/2019-07-05-MarkDown插入数学公式/index.html">
+<meta property="og:site_name" content="勤能补拙">
+<meta property="og:description" content="参考文章Mathjax入门指南MathjaxMarkDown 插入数学公式实验大集合HEXO指南  Mathjax 导入如果要使用 Mathjax 引擎的话，需要引入脚本。将下面的代码引入 MD 文件内部。 &amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;http://cdn.mathjax.org/mathjax/latest/Mat">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-25T12:47:20.969Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MarkDown插入数学公式">
+<meta name="twitter:description" content="参考文章Mathjax入门指南MathjaxMarkDown 插入数学公式实验大集合HEXO指南  Mathjax 导入如果要使用 Mathjax 引擎的话，需要引入脚本。将下面的代码引入 MD 文件内部。 &amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;http://cdn.mathjax.org/mathjax/latest/Mat">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dylandu123.github.io/2019/07/05/2019-07-05-MarkDown插入数学公式/">
+
+
+
+
+
+  <title>MarkDown插入数学公式 | 勤能补拙</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">勤能补拙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">这是一个简单的小博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2019/07/05/2019-07-05-MarkDown插入数学公式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dylan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="勤能补拙">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MarkDown插入数学公式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-05T12:26:28+08:00">
+                2019-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MarkDown/" itemprop="url" rel="index">
+                    <span itemprop="name">MarkDown</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><em>参考文章</em><br><a href="https://mathjax-chinese-doc.readthedocs.io/en/latest/start.html" target="_blank" rel="noopener">Mathjax入门指南</a><br><a href="https://www.mathjax.org/" target="_blank" rel="noopener">Mathjax</a><br><a href="https://juejin.im/post/5a6721bd518825733201c4a2" target="_blank" rel="noopener">MarkDown 插入数学公式实验大集合</a><br><a href="https://hexo-guide.readthedocs.io/zh_CN/latest/theme/[NexT]%E9%85%8D%E7%BD%AEMathJax.html" target="_blank" rel="noopener">HEXO指南</a></p>
+</blockquote>
+<h1 id="Mathjax-导入"><a href="#Mathjax-导入" class="headerlink" title="Mathjax 导入"></a>Mathjax 导入</h1><p>如果要使用 Mathjax 引擎的话，需要引入脚本。将下面的代码引入 MD 文件内部。</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;
+</code></pre><p>目前插入方式分两种，一种是行内插入，一种是换行插入。</p>
+<h2 id="行内插入"><a href="#行内插入" class="headerlink" title="行内插入"></a>行内插入</h2><pre><code>\\(a + b\\)
+</code></pre><p>这是一个测试行内插入的文案 \(a + b\) 这是一个测试行内插入的文案<br>特点就是通过<code>(</code> 和 <code>)</code> 包含公式,然后为了模板引擎能够区分该 <code>(</code> 不是普通文本的 <code>(</code> 而是公式的 <code>(</code>，通过 <code>\\</code> 转义一下。</p>
+<h2 id="换行插入"><a href="#换行插入" class="headerlink" title="换行插入"></a>换行插入</h2><pre><code>$$a + b$$
+</code></pre><p>这是一个测试换行插入的文案 $$a + b$$ 这是一个测试换行插入的文案<br>特点就是通过<code>$$</code>来包含插入的文案。</p>
+<h1 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h1><h2 id="上下标"><a href="#上下标" class="headerlink" title="上下标"></a>上下标</h2><pre><code>$$x_1$$
+$$x_2^1$$
+$$x_{2}^{(n)}$$
+</code></pre><p>$$x_1$$ $$x_2^1$$ $$x_{2}^{(n)}$$</p>
+<h2 id="求和、积分"><a href="#求和、积分" class="headerlink" title="求和、积分"></a>求和、积分</h2><pre><code>$$\sum_{k=1}^{n}\frac{1}{k}$$
+$\sum_{k=1}^n\frac{1}{k}$
+$$\int_a^b f(x)dx$$
+$\int_a^b f(x)dx$
+</code></pre><p>$$\sum_{k=1}^{n}\frac{1}{k}$$<br>$\sum_{k=1}^n\frac{1}{k}$<br>$$\int_a^b f(x)dx$$<br>$\int_a^b f(x)dx$</p>
+<h2 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h2><pre><code>紧贴 $$a\!b$$
+没有空格 $$ab$$
+小空格 $$a\,b$$
+中等空格 $$a\;b$$
+大空格 $$a\ b$$
+quad空格 $$a\quad b$$
+两个quad空格 $$a\qquad b$$
+</code></pre><p>$$a!b$$<br>$$ab$$<br>$$a\,b$$<br>$$a\;b$$<br>$$a\ b$$<br>$$a\quad b$$<br>$$a\qquad b$$</p>
+<h2 id="公式界定符"><a href="#公式界定符" class="headerlink" title="公式界定符"></a>公式界定符</h2><pre><code>\\( ( \\)
+\\( ) \\)
+\\( [ \\)
+\\( ] \\)
+\\( \\{ \\)
+\\( \\} \\)
+\\( | \\)
+\\( \\| \\)
+$$\left(\sum_{k=\frac{1}{2}}^{N^2}\frac{1}{k}\right)$$
+</code></pre><p>$$\left(\sum_{k=\frac{1}{2}}^{N^2}\frac{1}{k}\right)$$</p>
+<h2 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h2><pre><code>$$\begin{matrix}1 &amp; 2\\\\3 &amp;4\end{matrix}$$
+$$\begin{pmatrix}1 &amp; 2\\\\3 &amp;4\end{pmatrix}$$
+$$\begin{bmatrix}1 &amp; 2\\\\3 &amp;4\end{bmatrix}$$
+$$\begin{Bmatrix}1 &amp; 2\\\\3 &amp;4\end{Bmatrix}$$
+$$\begin{vmatrix}1 &amp; 2\\\\3 &amp;4\end{vmatrix}$$
+$$\left|\begin{matrix}1 &amp; 2\\\\3 &amp;4\end{matrix}\right|$$
+$$\begin{Vmatrix}1 &amp; 2\\\\3 &amp;4\end{Vmatrix}$$
+</code></pre><p>$$\begin{matrix}1 &amp; 2\\3 &amp;4\end{matrix}$$<br>$$\begin{pmatrix}1 &amp; 2\\3 &amp;4\end{pmatrix}$$<br>$$\begin{bmatrix}1 &amp; 2\\3 &amp;4\end{bmatrix}$$<br>$$\begin{Bmatrix}1 &amp; 2\\3 &amp;4\end{Bmatrix}$$<br>$$\begin{vmatrix}1 &amp; 2\\3 &amp;4\end{vmatrix}$$<br>$$\left|\begin{matrix}1 &amp; 2\\3 &amp;4\end{matrix}\right|$$<br>$$\begin{Vmatrix}1 &amp; 2\\3 &amp;4\end{Vmatrix}$$</p>
+<h2 id="排版数组"><a href="#排版数组" class="headerlink" title="排版数组"></a>排版数组</h2><pre><code>$$X =
+\left( \begin{array}
+x\_{11} &amp; x\_{12} &amp; \ldots \\\\
+x\_{21} &amp; x\_{22} &amp; \ldots \\\\
+\vdots &amp; \vdots &amp; \ddots
+\end{array} \right)$$
+</code></pre><p>$$X =<br>\left( \begin{array}<br>x_{11} &amp; x_{12} &amp; \ldots \\<br>x_{21} &amp; x_{22} &amp; \ldots \\<br>\vdots &amp; \vdots &amp; \ddots<br>\end{array} \right)$$</p>
+<h2 id="数学符号"><a href="#数学符号" class="headerlink" title="数学符号"></a>数学符号</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">实例</th>
+<th style="text-align:center">代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">加</td>
+<td style="text-align:center">+</td>
+<td style="text-align:center">{x+y}</td>
+<td style="text-align:center">{x+y}</td>
+</tr>
+<tr>
+<td style="text-align:center">减</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">{x−y}</td>
+<td style="text-align:center">{x−y}</td>
+</tr>
+<tr>
+<td style="text-align:center">✘乘</td>
+<td style="text-align:center">\(\times\)</td>
+<td style="text-align:center">\(x \times y \)</td>
+<td style="text-align:center">{x \times y}</td>
+</tr>
+<tr>
+<td style="text-align:center">点乘</td>
+<td style="text-align:center">\(\cdot\)</td>
+<td style="text-align:center">\(x \cdot y \)</td>
+<td style="text-align:center">{x \cdot y}</td>
+</tr>
+<tr>
+<td style="text-align:center">星乘</td>
+<td style="text-align:center">\(\ast\)</td>
+<td style="text-align:center">\(x \ast y \)</td>
+<td style="text-align:center">{x \ast y}</td>
+</tr>
+<tr>
+<td style="text-align:center">除</td>
+<td style="text-align:center">\(\div\)</td>
+<td style="text-align:center">\(x \div y \)</td>
+<td style="text-align:center">{x \div y}</td>
+</tr>
+<tr>
+<td style="text-align:center">分数</td>
+<td style="text-align:center">\(\frac{x}{y}\)</td>
+<td style="text-align:center">\(\frac{x}{y}\)</td>
+<td style="text-align:center">\frac{x}{y}</td>
+</tr>
+<tr>
+<td style="text-align:center">开方</td>
+<td style="text-align:center">\(\sqrt[]{}\)</td>
+<td style="text-align:center">\(\sqrt[x]{y}\)</td>
+<td style="text-align:center">\sqrt[x]{y}}</td>
+</tr>
+<tr>
+<td style="text-align:center">加减</td>
+<td style="text-align:center">\(\pm\)</td>
+<td style="text-align:center">\(x \pm y \)</td>
+<td style="text-align:center">{x \pm y}</td>
+</tr>
+<tr>
+<td style="text-align:center">减加</td>
+<td style="text-align:center">\(\mp\)</td>
+<td style="text-align:center">\(x \mp y \)</td>
+<td style="text-align:center">{x \mp y}</td>
+</tr>
+<tr>
+<td style="text-align:center">不等于</td>
+<td style="text-align:center">\(\neq\)</td>
+<td style="text-align:center">\(x \neq y \)</td>
+<td style="text-align:center">{x \neq y}</td>
+</tr>
+<tr>
+<td style="text-align:center">约等于</td>
+<td style="text-align:center">\(\approx\)</td>
+<td style="text-align:center">\(x \approx y \)</td>
+<td style="text-align:center">{x \approx y}</td>
+</tr>
+<tr>
+<td style="text-align:center">并</td>
+<td style="text-align:center">\(\cup\)</td>
+<td style="text-align:center">\(x \cup y \)</td>
+<td style="text-align:center">{x \cup y}</td>
+</tr>
+<tr>
+<td style="text-align:center">交</td>
+<td style="text-align:center">\(\cap\)</td>
+<td style="text-align:center">\(x \cap y \)</td>
+<td style="text-align:center">{x \cap y}</td>
+</tr>
+<tr>
+<td style="text-align:center">上划线</td>
+<td style="text-align:center">\(\bar{variable}\)</td>
+<td style="text-align:center">\(\bar{variable}\)</td>
+<td style="text-align:center">\bar{ variable }</td>
+</tr>
+<tr>
+<td style="text-align:center">长上划线</td>
+<td style="text-align:center">\(\overline{variable}\)</td>
+<td style="text-align:center">\(\overline{variable}\)</td>
+<td style="text-align:center">\overline{ variable }</td>
+</tr>
+<tr>
+<td style="text-align:center">求和</td>
+<td style="text-align:center">\(\sum\)</td>
+<td style="text-align:center">\(\sum_{i=1}^{N}\)</td>
+<td style="text-align:center">\sum_{ i=1 }^{ N }</td>
+</tr>
+<tr>
+<td style="text-align:center">求和</td>
+<td style="text-align:center">\(\sum\)</td>
+<td style="text-align:center">\(\sum_{i=1}^{N}\)</td>
+<td style="text-align:center">\sum_{ i=1 }^{ N }</td>
+</tr>
+<tr>
+<td style="text-align:center">子集</td>
+<td style="text-align:center">\(\subset\)</td>
+<td style="text-align:center">\(x \subset y \)</td>
+<td style="text-align:center">x \subset y</td>
+</tr>
+<tr>
+<td style="text-align:center">子集</td>
+<td style="text-align:center">\(\subseteq\)</td>
+<td style="text-align:center">\(x \subseteq y \)</td>
+<td style="text-align:center">x \subseteq y</td>
+</tr>
+<tr>
+<td style="text-align:center">超集</td>
+<td style="text-align:center">\(\supset\)</td>
+<td style="text-align:center">\(x \supset y \)</td>
+<td style="text-align:center">x \supset y</td>
+</tr>
+<tr>
+<td style="text-align:center">超集</td>
+<td style="text-align:center">\(\supseteq\)</td>
+<td style="text-align:center">\(x \supseteq y \)</td>
+<td style="text-align:center">x \supseteq y</td>
+</tr>
+<tr>
+<td style="text-align:center">非子集</td>
+<td style="text-align:center">\(\not\subset\)</td>
+<td style="text-align:center">\(x \not\subset y \)</td>
+<td style="text-align:center">x \not\subset y</td>
+</tr>
+</tbody>
+</table>
+<h2 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h2><p>$$<br>\begin{array}{|c|c|c|c|c|c|c|c|}<br>\hline<br>{\alpha} &amp; {\backslash alpha} &amp; {\theta} &amp; {\backslash theta} &amp; {o} &amp; {o} &amp; {\upsilon} &amp; {\backslash upsilon} \\<br>\hline<br>{\beta} &amp; {\backslash beta} &amp; {\vartheta} &amp; {\backslash vartheta} &amp; {\pi} &amp; {\backslash pi} &amp; {\phi} &amp; {\backslash phi} \\<br>\hline<br>{\gamma} &amp; {\backslash gamma} &amp; {\iota} &amp; {\backslash iota} &amp; {\varpi} &amp; {\backslash varpi} &amp; {\varphi} &amp; {\backslash varphi} \\<br>\hline<br>{\delta} &amp; {\backslash delta} &amp; {\kappa} &amp; {\backslash kappa} &amp; {\rho} &amp; {\backslash rho} &amp; {\chi} &amp; {\backslash chi} \\<br>\hline<br>{\epsilon} &amp; {\backslash epsilon} &amp; {\lambda} &amp; {\backslash lambda} &amp; {\varrho} &amp; {\backslash varrho} &amp; {\psi} &amp; {\backslash psi} \\<br>\hline<br>{\varepsilon} &amp; {\backslash varepsilon} &amp; {\mu} &amp; {\backslash mu} &amp; {\sigma} &amp; {\backslash sigma} &amp; {\omega} &amp; {\backslash omega} \\<br>\hline<br>{\zeta} &amp; {\backslash zeta} &amp; {\nu} &amp; {\backslash nu} &amp; {\varsigma} &amp; {\backslash varsigma} &amp; {} &amp; {} \\<br>\hline<br>{\eta} &amp; {\backslash eta} &amp; {\xi} &amp; {\backslash xi} &amp; {\tau} &amp; {\backslash tau} &amp; {} &amp; {} \\<br>\hline<br>{\Gamma} &amp; {\backslash Gamma} &amp; {\Lambda} &amp; {\backslash Lambda} &amp; {\Sigma} &amp; {\backslash Sigma} &amp; {\Psi} &amp; {\backslash Psi} \\<br>\hline<br>{\Delta} &amp; {\backslash Delta} &amp; {\Xi} &amp; {\backslash Xi} &amp; {\Upsilon} &amp; {\backslash Upsilon} &amp; {\Omega} &amp; {\backslash Omega} \\<br>\hline<br>{\Omega} &amp; {\backslash Omega} &amp; {\Pi} &amp; {\backslash Pi} &amp; {\Phi} &amp; {\backslash Phi} &amp; {} &amp; {} \\<br>\hline<br>\end{array}<br>$$</p>
+<h1 id="HEXO博客使用-MathJax"><a href="#HEXO博客使用-MathJax" class="headerlink" title="HEXO博客使用 MathJax"></a>HEXO博客使用 MathJax</h1><p>打开NexT内部数学公式渲染引擎<br>进入<code>themes/next/_config.yml</code>，找到<code>math</code>配置</p>
+<pre><code>mathjax:
+enable: false
+per_page: false
+cdn: //cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML
+</code></pre><p>设置属性<code>enable</code>为<code>true</code>，即打开数学公式渲染<br>属性<code>per_page</code>表示是否自动渲染每一页，如果为<code>true</code>就只渲染配置块中包含<code>mathjax: true</code>的文章</p>
+<pre><code>---
+title: Next Post
+date: 2019-01-19 17:36:13
+mathjax: true
+---
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/工具/" rel="tag"># 工具</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/04/2019-07-05-等可能概率模型（古典概型）/" rel="next" title="等可能概率模型 （古典概型）">
+                <i class="fa fa-chevron-left"></i> 等可能概率模型 （古典概型）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/05/2019-07-05-条件概率公式/" rel="prev" title="条件概率公式">
+                条件概率公式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Dylan">
+          <p class="site-author-name" itemprop="name">Dylan</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mathjax-导入"><span class="nav-number">1.</span> <span class="nav-text">Mathjax 导入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#行内插入"><span class="nav-number">1.1.</span> <span class="nav-text">行内插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#换行插入"><span class="nav-number">1.2.</span> <span class="nav-text">换行插入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础用法"><span class="nav-number">2.</span> <span class="nav-text">基础用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#上下标"><span class="nav-number">2.1.</span> <span class="nav-text">上下标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求和、积分"><span class="nav-number">2.2.</span> <span class="nav-text">求和、积分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空格"><span class="nav-number">2.3.</span> <span class="nav-text">空格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公式界定符"><span class="nav-number">2.4.</span> <span class="nav-text">公式界定符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵"><span class="nav-number">2.5.</span> <span class="nav-text">矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排版数组"><span class="nav-number">2.6.</span> <span class="nav-text">排版数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学符号"><span class="nav-number">2.7.</span> <span class="nav-text">数学符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#希腊字母"><span class="nav-number">2.8.</span> <span class="nav-text">希腊字母</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HEXO博客使用-MathJax"><span class="nav-number">3.</span> <span class="nav-text">HEXO博客使用 MathJax</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dylan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
