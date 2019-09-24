@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="二阶三阶行列式">
+<meta name="description" content="二阶行列式的概念是从解线性方程组的需要中引进来的。所谓线性方程组是指未知项的最高次数是一次的方程组，其中最简单的是在中学时学习的二元线性方程组： $$a_{11} x_1 + a_{12} x_2 = b_1 \\  a_{21} x_1 + a_{22} x_2 = b_2 $$ 其中\(a_{11}\)表示第 i 个方程中第j个未知数的系数, \(b_{i}\)表示第i个方程的常数项。 用加减">
 <meta name="keywords" content="线性代数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线性代数（行列式）">
 <meta property="og:url" content="https://dylandu123.github.io/2019/08/17/2019-08-17-线性代数-行列式/index.html">
 <meta property="og:site_name" content="勤能补拙">
-<meta property="og:description" content="二阶三阶行列式">
+<meta property="og:description" content="二阶行列式的概念是从解线性方程组的需要中引进来的。所谓线性方程组是指未知项的最高次数是一次的方程组，其中最简单的是在中学时学习的二元线性方程组： $$a_{11} x_1 + a_{12} x_2 = b_1 \\  a_{21} x_1 + a_{22} x_2 = b_2 $$ 其中\(a_{11}\)表示第 i 个方程中第j个未知数的系数, \(b_{i}\)表示第i个方程的常数项。 用加减">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-17T05:47:17.238Z">
+<meta property="og:updated_time" content="2019-08-17T06:29:57.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线性代数（行列式）">
-<meta name="twitter:description" content="二阶三阶行列式">
+<meta name="twitter:description" content="二阶行列式的概念是从解线性方程组的需要中引进来的。所谓线性方程组是指未知项的最高次数是一次的方程组，其中最简单的是在中学时学习的二元线性方程组： $$a_{11} x_1 + a_{12} x_2 = b_1 \\  a_{21} x_1 + a_{22} x_2 = b_2 $$ 其中\(a_{11}\)表示第 i 个方程中第j个未知数的系数, \(b_{i}\)表示第i个方程的常数项。 用加减">
 
 
 
@@ -352,7 +352,21 @@
       
 
       
-        <h1 id="二阶三阶行列式"><a href="#二阶三阶行列式" class="headerlink" title="二阶三阶行列式"></a>二阶三阶行列式</h1>
+        <h1 id="二阶"><a href="#二阶" class="headerlink" title="二阶"></a>二阶</h1><p>行列式的概念是从解线性方程组的需要中引进来的。所谓线性方程组是指未知项的最高次数是一次的方程组，其中最简单的是在中学时学习的二元线性方程组：</p>
+<p>$$a_{11} x_1 + a_{12} x_2 = b_1 \\  a_{21} x_1 + a_{22} x_2 = b_2 $$</p>
+<p>其中\(a_{11}\)表示第 <code>i</code> 个方程中第<code>j</code>个未知数的系数, \(b_{i}\)表示第<code>i</code>个方程的常数项。</p>
+<p>用加减消元法来解该方程组，第一、二式分别乘以\(a_{22}\)和\(a_{12}\)，然后相减，消去未知数\(x_{2}\)，得到</p>
+<p>$$ ( a_{11} a_{22} - a_{12} a_{21} ) x_1 = a_{22} b_{1} - a_{12} b_{2} $$</p>
+<p>同理，消去未知数\(x_{1}\)，得到</p>
+<p>$$ ( a_{11} a_{22} - a_{12} a_{21} ) x_2 = a_{11} b_{2} - a_{21} b_{1} $$</p>
+<p>当\(a_{11}a_{22} - a_{12}a_{21} \neq 0\) 时，方程组有唯一解</p>
+<p>$$ x_1 = \frac{a_{22} b_{1} - a_{12} b_{2}}{a_{11} a_{22} - a_{12} a_{21}} $$</p>
+<p>$$ x_2 = \frac{a_{11} b_{2} - a_{21} b_{1}}{a_{11} a_{22} - a_{12} a_{21}} $$</p>
+<p>为了便于记忆，引入如下记号</p>
+<p>$$D=\begin{vmatrix}a_{11} &amp; a_{12}\\a_{21} &amp; a_{22}\end{vmatrix} = a_{11} a_{22} - a_{12} a_{21}$$</p>
+<p>称为二阶行列式，其中\(a_{ij}\)称为这个行列式第<code>i</code>行第<code>j</code>列的元素。<br>二阶行列式是四个数排成两行两列，用一种称为对角线法则计算得出的数，从左上角到右下角上元素相乘，取正号，右上角和左下角上元素相乘，取负号，两个乘积的代数和就是二阶行列式的值。</p>
+<h1 id="三阶"><a href="#三阶" class="headerlink" title="三阶"></a>三阶</h1><p>直接计算——对角线法</p>
+
       
     </div>
     
@@ -382,8 +396,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/29/2019-08-10-React Native 开发准备/" rel="next" title="React Native 开发准备">
-                <i class="fa fa-chevron-left"></i> React Native 开发准备
+              <a href="/2019/07/29/2019-07-29-英语英语联想单词法/" rel="next" title="英语联想单词法">
+                <i class="fa fa-chevron-left"></i> 英语联想单词法
               </a>
             
           </div>
@@ -465,7 +479,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -522,7 +536,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#二阶三阶行列式"><span class="nav-number">1.</span> <span class="nav-text">二阶三阶行列式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#二阶"><span class="nav-number">1.</span> <span class="nav-text">二阶</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三阶"><span class="nav-number">2.</span> <span class="nav-text">三阶</span></a></li></ol></div>
             
 
           </div>
