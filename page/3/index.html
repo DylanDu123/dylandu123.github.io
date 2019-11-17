@@ -260,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2013/02/19/2013-02-19-实验8/">
+    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2013/02/19/2013-02-19-检测点9-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dylan">
@@ -279,7 +279,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/02/19/2013-02-19-实验8/" itemprop="url">实验8</a></h1>
+                <a class="post-title-link" href="/2013/02/19/2013-02-19-检测点9-2/" itemprop="url">检测点9.2</a></h1>
         
 
         <div class="post-meta">
@@ -353,11 +353,159 @@
       
         
           
-          分析下面的程序，在运行前思考:这个程序可以正确返回吗?运行后再思考:为什么是这种结果?通过这个程序加深对相关内容的理解。12345678910111213141516171819assume cs:codesgcodesg segment    mov ax,4c00h    int 21hstar
+          补全编程，利用jcxz 指令，实现在内存2000H段中查找第一个值为0的字节，找到后，将它的偏移地址存储在dx中。注：寻找的是一个字节而非字，因jcxz只有当cx=0时才有作用，同时题目要求找到第一个值为0的字节，可将ds:bx中的值传入cl中，与ch=0组成cx来判断是否为0.因此完整代码：   
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2013/02/19/2013-02-19-实验8/#more" rel="contents">
+            <a class="btn" href="/2013/02/19/2013-02-19-检测点9-2/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2013/02/19/2013-02-19-检测点9-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dylan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="勤能补拙">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/02/19/2013-02-19-检测点9-3/" itemprop="url">检测点9.3</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-19T21:25:14+08:00">
+                2013-02-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          补全编程，利用loop 指令，实现在内存2000H段中查找第一个值为0的字节，找到后，将它的偏移地址存储在dx中。注：loop只有当 cx-1&gt; 0时才会继续循环，因此如果传入cl的值为0，则cl与ch组合为0，需加上1才可以满足cx-1=0退出循环。    assume Cs : code 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2013/02/19/2013-02-19-检测点9-3/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1358,163 +1506,6 @@ E（Enter）修改内存字节-E 地址 内容表
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2013/02/05/2013-02-05-检测点3-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Dylan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="勤能补拙">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2013/02/05/2013-02-05-检测点3-2/" itemprop="url">检测点3.2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-05T15:09:39+08:00">
-                2013-02-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          补全下面的程序，使其可以将 10000H-1000FH 中的 8 个字，逆序拷贝到
-20000H-2000FH 中。
-mov ax,1000H
-mov ds,ax
-123mov ax,2000Hmov ss,axmov sp,10H
-
-push [0]
-push [2]
-push [4]
-push 
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2013/02/05/2013-02-05-检测点3-2/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2013/02/05/2013-02-05-检测点3-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1665,7 +1656,7 @@ push
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2013/02/03/2013-02-03-Mac下安装汇编学习工具/">
+    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2013/02/05/2013-02-05-检测点3-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dylan">
@@ -1684,7 +1675,7 @@ push
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2013/02/03/2013-02-03-Mac下安装汇编学习工具/" itemprop="url">Mac下安装汇编学习工具</a></h1>
+                <a class="post-title-link" href="/2013/02/05/2013-02-05-检测点3-2/" itemprop="url">检测点3.2</a></h1>
         
 
         <div class="post-meta">
@@ -1696,8 +1687,8 @@ push
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-03T17:57:46+08:00">
-                2013-02-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-05T15:09:39+08:00">
+                2013-02-05
               </time>
             
 
@@ -1758,15 +1749,20 @@ push
       
         
           
-          1、下载
-下载dosbox
-下载工具debug、edit、link、masm
+          补全下面的程序，使其可以将 10000H-1000FH 中的 8 个字，逆序拷贝到
+20000H-2000FH 中。
+mov ax,1000H
+mov ds,ax
+123mov ax,2000Hmov ss,axmov sp,10H
 
-2、安装1 安装DOSBox。解压缩 DOSBox。将 DOSBox 拖拽进应用程序中。2 切回 Finder 中，在mac中你自己的用户目录（～）下建立一个文件夹，命名为 DOSDEBUG3 在这个 DOSDEBUG 
+push [0]
+push [2]
+push [4]
+push 
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2013/02/03/2013-02-03-Mac下安装汇编学习工具/#more" rel="contents">
+            <a class="btn" href="/2013/02/05/2013-02-05-检测点3-2/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1852,7 +1848,7 @@ push
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
