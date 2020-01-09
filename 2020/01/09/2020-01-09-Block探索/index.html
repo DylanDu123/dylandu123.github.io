@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="汇编,">
+  <meta name="keywords" content="iOS,">
 
 
 
@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="下面的 3 条指令执行后，cpu 几次修改 IP？都是在什么时候？最后 IP 中的值是多少？mov ax,bx sub ax,ax jmp ax  答：一共修改四次 第一次：读取 mov ax,bx 之后 第二次：读取 sub ax,ax 之后 第三次：读取 jmp ax 之后 第四次：执行 jmp ax 修改 IP 最后 IP 的值为 0000H，因为最后 ax 中的值为 0000H，所以 IP">
-<meta name="keywords" content="汇编">
+<meta name="description" content="Block 初探Block 是什么首先新建main.m文件写下如下代码123456int main(int argc, const char * argv[]) &amp;#123;    @autoreleasepool &amp;#123;        ^&amp;#123; NSLog(@&amp;quot;Hello, World!\n&amp;quot;); &amp;#125; ();    &amp;#125;    return 0;">
+<meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="检测点2.3">
-<meta property="og:url" content="https://dylandu123.github.io/2013/02/03/2013-02-02-检测点2-3/index.html">
+<meta property="og:title" content="Block探索">
+<meta property="og:url" content="https://dylandu123.github.io/2020/01/09/2020-01-09-Block探索/index.html">
 <meta property="og:site_name" content="勤能补拙">
-<meta property="og:description" content="下面的 3 条指令执行后，cpu 几次修改 IP？都是在什么时候？最后 IP 中的值是多少？mov ax,bx sub ax,ax jmp ax  答：一共修改四次 第一次：读取 mov ax,bx 之后 第二次：读取 sub ax,ax 之后 第三次：读取 jmp ax 之后 第四次：执行 jmp ax 修改 IP 最后 IP 的值为 0000H，因为最后 ax 中的值为 0000H，所以 IP">
+<meta property="og:description" content="Block 初探Block 是什么首先新建main.m文件写下如下代码123456int main(int argc, const char * argv[]) &amp;#123;    @autoreleasepool &amp;#123;        ^&amp;#123; NSLog(@&amp;quot;Hello, World!\n&amp;quot;); &amp;#125; ();    &amp;#125;    return 0;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-25T12:47:20.962Z">
+<meta property="og:updated_time" content="2020-01-09T13:07:23.342Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="检测点2.3">
-<meta name="twitter:description" content="下面的 3 条指令执行后，cpu 几次修改 IP？都是在什么时候？最后 IP 中的值是多少？mov ax,bx sub ax,ax jmp ax  答：一共修改四次 第一次：读取 mov ax,bx 之后 第二次：读取 sub ax,ax 之后 第三次：读取 jmp ax 之后 第四次：执行 jmp ax 修改 IP 最后 IP 的值为 0000H，因为最后 ax 中的值为 0000H，所以 IP">
+<meta name="twitter:title" content="Block探索">
+<meta name="twitter:description" content="Block 初探Block 是什么首先新建main.m文件写下如下代码123456int main(int argc, const char * argv[]) &amp;#123;    @autoreleasepool &amp;#123;        ^&amp;#123; NSLog(@&amp;quot;Hello, World!\n&amp;quot;); &amp;#125; ();    &amp;#125;    return 0;">
 
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="https://dylandu123.github.io/2013/02/03/2013-02-02-检测点2-3/">
+  <link rel="canonical" href="https://dylandu123.github.io/2020/01/09/2020-01-09-Block探索/">
 
 
 
 
 
-  <title>检测点2.3 | 勤能补拙</title>
+  <title>Block探索 | 勤能补拙</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2013/02/03/2013-02-02-检测点2-3/">
+    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2020/01/09/2020-01-09-Block探索/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Dylan">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">检测点2.3</h1>
+          <h1 class="post-title" itemprop="name headline">Block探索</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-02-03T15:09:39+08:00">
-                2013-02-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-09T20:39:08+08:00">
+                2020-01-09
               </time>
             
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
+                  <a href="/categories/移动端/" itemprop="url" rel="index">
+                    <span itemprop="name">移动端</span>
                   </a>
                 </span>
 
@@ -352,17 +352,24 @@
       
 
       
-        <h2 id="下面的-3-条指令执行后，cpu-几次修改-IP？都是在什么时候？最后-IP-中的值是多少？"><a href="#下面的-3-条指令执行后，cpu-几次修改-IP？都是在什么时候？最后-IP-中的值是多少？" class="headerlink" title="下面的 3 条指令执行后，cpu 几次修改 IP？都是在什么时候？最后 IP 中的值是多少？"></a>下面的 3 条指令执行后，cpu 几次修改 IP？都是在什么时候？最后 IP 中的值是多少？</h2><pre><code>mov ax,bx
-sub ax,ax
-jmp ax
+        <h3 id="Block-初探"><a href="#Block-初探" class="headerlink" title="Block 初探"></a>Block 初探</h3><h4 id="Block-是什么"><a href="#Block-是什么" class="headerlink" title="Block 是什么"></a>Block 是什么</h4><p>首先新建<code>main.m</code>文件写下如下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        ^&#123; NSLog(@&quot;Hello, World!\n&quot;); &#125; ();</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过<code>clang -rewrite-objc main.m -o main.cpp</code>将其转成<code>.cpp</code>文件，发下如下代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">struct __block_impl &#123;</span><br><span class="line">  void *isa;</span><br><span class="line">  int Flags;</span><br><span class="line">  int Reserved;</span><br><span class="line">  void *FuncPtr;</span><br><span class="line">&#125;;</span><br><span class="line">struct __main_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int flags=0) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock;</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static void __main_block_func_0(struct __main_block_impl_0 *__cself) &#123;</span><br><span class="line"> NSLog((NSString *)&amp;__NSConstantStringImpl__var_folders_g9_xh4404mx4pv0f7vwkvs69f_m0000gn_T_main_1beaaa_mi_0); &#125;</span><br><span class="line"></span><br><span class="line">static struct __main_block_desc_0 &#123;</span><br><span class="line">  size_t reserved;</span><br><span class="line">  size_t Block_size;</span><br><span class="line">&#125; __main_block_desc_0_DATA = &#123; 0, sizeof(struct __main_block_impl_0)&#125;;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>一个 block 实际是一个对象，它主要由一个 impl 和 一个 descriptor 组成。</li>
+<li>impl 里面存放了 isa 指针和 FuncPtr，所有对象都有 isa 指针，用于实现对象相关的功能，FuncPtr 是函数指针，指向具体的 block 实现的函数调用地址。</li>
+</ol>
+<p>所以可以得出结论，<code>Block</code>也可以看成是一个对象，因为他有<code>isa</code>指针。</p>
+<h4 id="Block-的类型"><a href="#Block-的类型" class="headerlink" title="Block 的类型"></a>Block 的类型</h4><p>通常会使用到的<code>Block</code>类型为</p>
+<pre><code>_NSConcreteStackBlock   设置在栈上(编译器分配内存)
+_NSConcreteGlobalBlock  设置在数据区域
+_NSConcreteMallocBlock  设置在堆上(由程序员分配内存)
+</code></pre><h6 id="NSConcreteStackBlock"><a href="#NSConcreteStackBlock" class="headerlink" title="_NSConcreteStackBlock"></a>_NSConcreteStackBlock</h6><p>局部定义的<code>Block</code>，示例代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int i = 0;</span><br><span class="line">void (^blk)() = ^() &#123;</span><br><span class="line">    printf(&quot;%d&quot;, i);</span><br><span class="line">&#125;;</span><br><span class="line">blk();</span><br></pre></td></tr></table></figure></p>
+<p><code>clang</code>转换后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct __main_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __main_block_desc_0* Desc;</span><br><span class="line">  __main_block_impl_0(void *fp, struct __main_block_desc_0 *desc, int flags=0) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteStackBlock; //设置在栈区的Block</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h6 id="NSConcreteGlobalBlock"><a href="#NSConcreteGlobalBlock" class="headerlink" title="_NSConcreteGlobalBlock"></a>_NSConcreteGlobalBlock</h6><p>全局定义的<code>Block</code>，示例代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void (^blk) () = ^&#123;</span><br><span class="line">    printf(&quot;Block&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        blk();</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>clang</code>转换后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct __blk_block_impl_0 &#123;</span><br><span class="line">  struct __block_impl impl;</span><br><span class="line">  struct __blk_block_desc_0* Desc;</span><br><span class="line">  __blk_block_impl_0(void *fp, struct __blk_block_desc_0 *desc, int flags=0) &#123;</span><br><span class="line">    impl.isa = &amp;_NSConcreteGlobalBlock; //设置在数据区的Block</span><br><span class="line">    impl.Flags = flags;</span><br><span class="line">    impl.FuncPtr = fp;</span><br><span class="line">    Desc = desc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>当<code>Block</code>不需要捕获<code>auto</code>变量时。设置为<code>_NSConcreteGlobalBlock</code></p>
+<h6 id="NSConcreteMallocBlock"><a href="#NSConcreteMallocBlock" class="headerlink" title="_NSConcreteMallocBlock"></a>_NSConcreteMallocBlock</h6><p>和<code>_NSConcreteStackBlock</code>几乎相同。只不过用了<code>objc_retainBlock</code>将其从占内存<code>copy</code>到堆内存中。由程序员掌控生命周期。</p>
 
-答：一共修改四次
-第一次：读取 mov ax,bx 之后
-第二次：读取 sub ax,ax 之后
-第三次：读取 jmp ax 之后
-第四次：执行 jmp ax 修改 IP
-最后 IP 的值为 0000H，因为最后 ax 中的值为 0000H，所以 IP 中的值也为0000H
-</code></pre>
       
     </div>
     
@@ -379,7 +386,7 @@ jmp ax
       
         <div class="post-tags">
           
-            <a href="/tags/汇编/" rel="tag"># 汇编</a>
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
           
         </div>
       
@@ -392,8 +399,8 @@ jmp ax
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2013/02/01/2013-02-01-检测点 1-1/" rel="next" title="检测点 1.1">
-                <i class="fa fa-chevron-left"></i> 检测点 1.1
+              <a href="/2019/12/07/2019-12-07-Runtime初探2/" rel="next" title="Runtime初探(二)">
+                <i class="fa fa-chevron-left"></i> Runtime初探(二)
               </a>
             
           </div>
@@ -401,10 +408,6 @@ jmp ax
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2013/02/03/2013-02-02-汇编第二章习题/" rel="prev" title="汇编第二章习题">
-                汇编第二章习题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -536,7 +539,7 @@ jmp ax
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下面的-3-条指令执行后，cpu-几次修改-IP？都是在什么时候？最后-IP-中的值是多少？"><span class="nav-number">1.</span> <span class="nav-text">下面的 3 条指令执行后，cpu 几次修改 IP？都是在什么时候？最后 IP 中的值是多少？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Block-初探"><span class="nav-number">1.</span> <span class="nav-text">Block 初探</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Block-是什么"><span class="nav-number">1.1.</span> <span class="nav-text">Block 是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Block-的类型"><span class="nav-number">1.2.</span> <span class="nav-text">Block 的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#NSConcreteStackBlock"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">_NSConcreteStackBlock</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#NSConcreteGlobalBlock"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">_NSConcreteGlobalBlock</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#NSConcreteMallocBlock"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">_NSConcreteMallocBlock</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
