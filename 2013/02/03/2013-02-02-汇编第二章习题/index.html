@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="给定段地址为 0001H，仅通过变化偏移地址寻址，CPU 的寻址范围为 0010H 到 1000FH。物理地址＝SA*16+EA EA 的变化范围为 0000H-FFFFH 物理地址范围为(SA*16+0H)~(SA*16+FFFFH) 现在 SA=0001H,那么寻址范围为 (0001H*16+0H)~(0001H*16+FFFFH) =0010H~1000FH 有一数据存放在内存 20000H">
+<meta name="description" content="给定段地址为 0001H，仅通过变化偏移地址寻址，CPU 的寻址范围为 0010H 到 1000FH。物理地址＝SA*16+EA EA 的变化范围为 0000H-FFFFH 物理地址范围为(SA*16+0H)~(SA*16+FFFFH) 现在 SA=0001H,那么寻址范围为 (0001H*16+0H)~(0001H*16+FFFFH) =0010H~1000FH有一数据存放在内存 20000H">
 <meta name="keywords" content="汇编">
 <meta property="og:type" content="article">
 <meta property="og:title" content="汇编第二章习题">
 <meta property="og:url" content="https://dylandu123.github.io/2013/02/03/2013-02-02-汇编第二章习题/index.html">
 <meta property="og:site_name" content="勤能补拙">
-<meta property="og:description" content="给定段地址为 0001H，仅通过变化偏移地址寻址，CPU 的寻址范围为 0010H 到 1000FH。物理地址＝SA*16+EA EA 的变化范围为 0000H-FFFFH 物理地址范围为(SA*16+0H)~(SA*16+FFFFH) 现在 SA=0001H,那么寻址范围为 (0001H*16+0H)~(0001H*16+FFFFH) =0010H~1000FH 有一数据存放在内存 20000H">
+<meta property="og:description" content="给定段地址为 0001H，仅通过变化偏移地址寻址，CPU 的寻址范围为 0010H 到 1000FH。物理地址＝SA*16+EA EA 的变化范围为 0000H-FFFFH 物理地址范围为(SA*16+0H)~(SA*16+FFFFH) 现在 SA=0001H,那么寻址范围为 (0001H*16+0H)~(0001H*16+FFFFH) =0010H~1000FH有一数据存放在内存 20000H">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-07-25T12:47:20.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="汇编第二章习题">
-<meta name="twitter:description" content="给定段地址为 0001H，仅通过变化偏移地址寻址，CPU 的寻址范围为 0010H 到 1000FH。物理地址＝SA*16+EA EA 的变化范围为 0000H-FFFFH 物理地址范围为(SA*16+0H)~(SA*16+FFFFH) 现在 SA=0001H,那么寻址范围为 (0001H*16+0H)~(0001H*16+FFFFH) =0010H~1000FH 有一数据存放在内存 20000H">
+<meta name="twitter:description" content="给定段地址为 0001H，仅通过变化偏移地址寻址，CPU 的寻址范围为 0010H 到 1000FH。物理地址＝SA*16+EA EA 的变化范围为 0000H-FFFFH 物理地址范围为(SA*16+0H)~(SA*16+FFFFH) 现在 SA=0001H,那么寻址范围为 (0001H*16+0H)~(0001H*16+FFFFH) =0010H~1000FH有一数据存放在内存 20000H">
 
 
 
@@ -357,14 +357,12 @@ EA 的变化范围为 0000H-FFFFH
 物理地址范围为(SA*16+0H)~(SA*16+FFFFH)
 现在 SA=0001H,那么寻址范围为
 (0001H*16+0H)~(0001H*16+FFFFH)
-=0010H~1000FH
-</code></pre><h2 id="有一数据存放在内存-20000H-单元中，现给定段地址为-SA，若想用偏移地址-寻到此单元。则-SA-应满足的条件是：最小为-1001H-，最大为-2000H-。"><a href="#有一数据存放在内存-20000H-单元中，现给定段地址为-SA，若想用偏移地址-寻到此单元。则-SA-应满足的条件是：最小为-1001H-，最大为-2000H-。" class="headerlink" title="有一数据存放在内存 20000H 单元中，现给定段地址为 SA，若想用偏移地址.寻到此单元。则 SA 应满足的条件是：最小为 1001H ，最大为 2000H 。"></a>有一数据存放在内存 20000H 单元中，现给定段地址为 SA，若想用偏移地址.寻到此单元。则 SA 应满足的条件是：最小为 1001H ，最大为 2000H 。</h2><pre><code>物理地址＝SA*16+EA
+=0010H~1000FH</code></pre><h2 id="有一数据存放在内存-20000H-单元中，现给定段地址为-SA，若想用偏移地址-寻到此单元。则-SA-应满足的条件是：最小为-1001H-，最大为-2000H-。"><a href="#有一数据存放在内存-20000H-单元中，现给定段地址为-SA，若想用偏移地址-寻到此单元。则-SA-应满足的条件是：最小为-1001H-，最大为-2000H-。" class="headerlink" title="有一数据存放在内存 20000H 单元中，现给定段地址为 SA，若想用偏移地址.寻到此单元。则 SA 应满足的条件是：最小为 1001H ，最大为 2000H 。"></a>有一数据存放在内存 20000H 单元中，现给定段地址为 SA，若想用偏移地址.寻到此单元。则 SA 应满足的条件是：最小为 1001H ，最大为 2000H 。</h2><pre><code>物理地址＝SA*16+EA
 20000h＝SA*16+EA
 EA 的变化范围为 0000H-FFFFH
 SA=(20000H-EA)/16=2000H-EA/16 
 EA 取最大值时,SA=2000H-FFFFH/16=2000H-0FFFH=1001H,SA 为最小值
-EA 取最小值时,SA=2000H-0H/16=2000H,SA 为最大值
-</code></pre>
+EA 取最小值时,SA=2000H-0H/16=2000H,SA 为最大值</code></pre>
       
     </div>
     
@@ -394,8 +392,8 @@ EA 取最小值时,SA=2000H-0H/16=2000H,SA 为最大值
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2013/02/03/2013-02-02-检测点2-3/" rel="next" title="检测点2.3">
-                <i class="fa fa-chevron-left"></i> 检测点2.3
+              <a href="/2013/02/01/2013-02-01-检测点 1-1/" rel="next" title="检测点 1.1">
+                <i class="fa fa-chevron-left"></i> 检测点 1.1
               </a>
             
           </div>
@@ -404,8 +402,8 @@ EA 取最小值时,SA=2000H-0H/16=2000H,SA 为最大值
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2013/02/03/2013-02-02-检测点2-2/" rel="prev" title="检测点2.2">
-                检测点2.2 <i class="fa fa-chevron-right"></i>
+              <a href="/2013/02/03/2013-02-02-检测点2-3/" rel="prev" title="检测点2.3">
+                检测点2.3 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -481,7 +479,7 @@ EA 取最小值时,SA=2000H-0H/16=2000H,SA 为最大值
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

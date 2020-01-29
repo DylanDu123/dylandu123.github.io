@@ -364,8 +364,7 @@ code segment
     mov bx,0
     jmp word ptr [bx+1]
 code ends
-end start
-</code></pre><h2 id="补全程序，使jmp指令执行后，CS-IP-指向程序的第一条指令"><a href="#补全程序，使jmp指令执行后，CS-IP-指向程序的第一条指令" class="headerlink" title="补全程序，使jmp指令执行后，CS:IP 指向程序的第一条指令"></a>补全程序，使jmp指令执行后，CS:IP 指向程序的第一条指令</h2><pre><code>assume cs : code
+end start</code></pre><h2 id="补全程序，使jmp指令执行后，CS-IP-指向程序的第一条指令"><a href="#补全程序，使jmp指令执行后，CS-IP-指向程序的第一条指令" class="headerlink" title="补全程序，使jmp指令执行后，CS:IP 指向程序的第一条指令"></a>补全程序，使jmp指令执行后，CS:IP 指向程序的第一条指令</h2><pre><code>assume cs : code
 data segment
     dd 12345678H
 data ends
@@ -380,13 +379,10 @@ code segment
 
     jmp dword ptr ds: [0]
 code ends
-end start
-</code></pre><h2 id="用Debug查看内存，结果如下"><a href="#用Debug查看内存，结果如下" class="headerlink" title="用Debug查看内存，结果如下:"></a>用Debug查看内存，结果如下:</h2><pre><code>2000:1000 BE 00 06 00 00 00 
-</code></pre><p>则此时，CPU执行指令: </p>
+end start</code></pre><h2 id="用Debug查看内存，结果如下"><a href="#用Debug查看内存，结果如下" class="headerlink" title="用Debug查看内存，结果如下:"></a>用Debug查看内存，结果如下:</h2><pre><code>2000:1000 BE 00 06 00 00 00 </code></pre><p>则此时，CPU执行指令: </p>
 <pre><code>mov ax, 2000H
 mov es, ax
-jmp dword ptr es: [1000H]
-</code></pre><p>后，(CS)=00BE，(IP)=0006</p>
+jmp dword ptr es: [1000H]</code></pre><p>后，(CS)=00BE，(IP)=0006</p>
 
       
     </div>
@@ -427,8 +423,8 @@ jmp dword ptr es: [1000H]
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2013/02/20/2013-02-20-实验9/" rel="prev" title="实验9">
-                实验9 <i class="fa fa-chevron-right"></i>
+              <a href="/2013/02/19/2013-02-19-实验8/" rel="prev" title="实验8">
+                实验8 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -504,7 +500,7 @@ jmp dword ptr es: [1000H]
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

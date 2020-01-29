@@ -103,7 +103,7 @@
 <meta property="og:description" content="什么是RunLoop苹果对run loop 的解释：  A run loop is an event processing loop that you use to schedule work and coordinate the receipt of incoming events. The purpose of a run loop is to keep your thread busy wh">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://dylandu123.github.io/2019/05/19/2019-05-20-runloop/img/runloop/01.png">
-<meta property="og:image" content="https://dylandu123.github.io/2019/05/19/2019-05-20-runloop/!--￼5--">
+<meta property="og:image" content="https://dylandu123.github.io/2019/05/19/2019-05-20-runloop/!--%EF%BF%BC5--">
 <meta property="og:image" content="https://dylandu123.github.io/2019/05/19/2019-05-20-runloop/img/runloop/02.png">
 <meta property="og:updated_time" content="2019-07-25T12:47:20.968Z">
 <meta name="twitter:card" content="summary">
@@ -363,6 +363,7 @@
 <p>RunLoop 实际上是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，函数会一直处于 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息）。<br>CFRunLoopRef 是在 CoreFoundation 框架内的，它提供了纯 C 函数的 API，所有这些 API 都是线程安全的。<a href="https://opensource.apple.com/tarballs/CF/" target="_blank" rel="noopener">CFRunLoopRef代码是开源</a>。<br>NSRunLoop 是基于 CFRunLoopRef 的封装，提供了面向对象的 API，但是这些 API 不是线程安全的。</p>
 <h2 id="RunLoop与线程的关系"><a href="#RunLoop与线程的关系" class="headerlink" title="RunLoop与线程的关系"></a>RunLoop与线程的关系</h2><p>除了主线程有自带的RunLoop对象，子线程时并不会主动生成RunLoop对象的,苹果不允许直接创建RunLoop，它只提供了两个自动获取的函数：CFRunLoopGetMain() 和 CFRunLoopGetCurrent()。 这两个函数内部的逻辑大概是下面这样:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">CF_EXPORT CFRunLoopRef _CFRunLoopGet0(pthread_t t) &#123;</span><br><span class="line">    if (pthread_equal(t, kNilPthreadT)) &#123;</span><br><span class="line">	t = pthread_main_thread_np();</span><br><span class="line">    &#125;</span><br><span class="line">    __CFLock(&amp;loopsLock);</span><br><span class="line">    if (!__CFRunLoops) &#123;</span><br><span class="line">        __CFUnlock(&amp;loopsLock);</span><br><span class="line">	CFMutableDictionaryRef dict = CFDictionaryCreateMutable(kCFAllocatorSystemDefault, 0, NULL, &amp;kCFTypeDictionaryValueCallBacks);</span><br><span class="line">	CFRunLoopRef mainLoop = __CFRunLoopCreate(pthread_main_thread_np());</span><br><span class="line">	CFDictionarySetValue(dict, pthreadPointer(pthread_main_thread_np()), mainLoop);</span><br><span class="line">	if (!OSAtomicCompareAndSwapPtrBarrier(NULL, dict, (void * volatile *)&amp;__CFRunLoops)) &#123;</span><br><span class="line">	    CFRelease(dict);</span><br><span class="line">	&#125;</span><br><span class="line">	CFRelease(mainLoop);</span><br><span class="line">        __CFLock(&amp;loopsLock);</span><br><span class="line">    &#125;</span><br><span class="line">    CFRunLoopRef loop = (CFRunLoopRef)CFDictionaryGetValue(__CFRunLoops, pthreadPointer(t));</span><br><span class="line">    __CFUnlock(&amp;loopsLock);</span><br><span class="line">    if (!loop) &#123;</span><br><span class="line">	CFRunLoopRef newLoop = __CFRunLoopCreate(t);</span><br><span class="line">        __CFLock(&amp;loopsLock);</span><br><span class="line">	loop = (CFRunLoopRef)CFDictionaryGetValue(__CFRunLoops, pthreadPointer(t));</span><br><span class="line">	if (!loop) &#123;</span><br><span class="line">	    CFDictionarySetValue(__CFRunLoops, pthreadPointer(t), newLoop);</span><br><span class="line">	    loop = newLoop;</span><br><span class="line">	&#125;</span><br><span class="line">        // don&apos;t release run loops inside the loopsLock, because CFRunLoopDeallocate may end up taking it</span><br><span class="line">        __CFUnlock(&amp;loopsLock);</span><br><span class="line">	CFRelease(newLoop);</span><br><span class="line">    &#125;</span><br><span class="line">    if (pthread_equal(t, pthread_self())) &#123;</span><br><span class="line">        _CFSetTSD(__CFTSDKeyRunLoop, (void *)loop, NULL);</span><br><span class="line">        if (0 == _CFGetTSD(__CFTSDKeyRunLoopCntr)) &#123;</span><br><span class="line">            _CFSetTSD(__CFTSDKeyRunLoopCntr, (void *)(PTHREAD_DESTRUCTOR_ITERATIONS-1), (void (*)(void *))__CFFinalizeRunLoop);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return loop;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CFRunLoopRef CFRunLoopGetMain(void) &#123;</span><br><span class="line">    CHECK_FOR_FORK();</span><br><span class="line">    static CFRunLoopRef __main = NULL; // no retain needed</span><br><span class="line">    if (!__main) __main = _CFRunLoopGet0(pthread_main_thread_np()); // no CAS needed</span><br><span class="line">    return __main;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CFRunLoopRef CFRunLoopGetCurrent(void) &#123;</span><br><span class="line">    CHECK_FOR_FORK();</span><br><span class="line">    CFRunLoopRef rl = (CFRunLoopRef)_CFGetTSD(__CFTSDKeyRunLoop);</span><br><span class="line">    if (rl) return rl;</span><br><span class="line">    return _CFRunLoopGet0(pthread_self());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>从上面的代码可以看出，线程和 RunLoop 之间是一一对应的，其关系是保存在一个全局的 Dictionary 里。线程刚创建时并没有 RunLoop，如果你不主动获取，那它一直都不会有。RunLoop 的创建是发生在第一次获取时，RunLoop 的销毁是发生在线程结束时。你只能在一个线程的内部获取其 RunLoop（主线程除外）。</p>
 <h2 id="RunLoop的构成"><a href="#RunLoop的构成" class="headerlink" title="RunLoop的构成"></a>RunLoop的构成</h2><p>在 CoreFoundation 里面关于 RunLoop 有5个类:</p>
 <ul>
@@ -372,7 +373,7 @@
 <li>CFRunLoopTimerRef</li>
 <li>CFRunLoopObserverRef</li>
 </ul>
-<p>CFRunLoopModeRef 类并没有对外暴露，通过 CFRunLoopRef 的接口进行了封装<br>对应的关系<br><img src="/2019/05/19/2019-05-20-runloop/img/runloop/01.png" alt><br><img src="/2019/05/19/2019-05-20-runloop/!--￼5--" alt="gitment"></p>
+<p>CFRunLoopModeRef 类并没有对外暴露，通过 CFRunLoopRef 的接口进行了封装<br>对应的关系<br><img src="/2019/05/19/2019-05-20-runloop/img/runloop/01.png" alt><br><img src="/2019/05/19/2019-05-20-runloop/!--%EF%BF%BC5--" alt="gitment"></p>
 <p>一个 RunLoop 包含若干个 Mode，每个 Mode 又包含若干个 Source/Timer/Observer。每次调用 RunLoop 的主函数时，只能指定其中一个 Mode，这个 Mode 被称作 CurrentMode。只能指定其中一个 Mode，这个 Mode 被称作 CurrentMode。如果需要切换 Mode，只能退出 Loop，再重新指定一个 Mode 进入。这样做主要是为了分隔开不同组的 Source/Timer/Observer，让其互不影响。<br>只能通过mode name来操作内部的 mode，当传入一个新的 mode name 但RunLoop 内部没有对应mode时，RunLoop会自动帮你创建对应的CFRunLoopModeRef。对于一个 RunLoop 来说，其内部的 mode 只能增加不能删除。<br>在主线程一般在kCFRunLoopDefaultMode下，当ScrollView滑动时，会进入NSEventTrackingRunLoopMode，如果有一个 timer 加入到了 defaultMode 下，那么在滑动时 timer 就会失效，要想在滑动时也能用 timer，可以将 timer 分别加入到这两个 mode，还有一种方式，就是加入到kCFRunLoopCommonModes组中，组中包含的三种 mode 都会同步加入此 timer。</p>
 <ol>
 <li><code>CFRunLoopSourceRef</code> 是事件产生的地方。Source有两个版本：<code>Source0</code> 和 <code>Source1</code><ul>
@@ -384,47 +385,49 @@
 <li><code>CFRunLoopObserverRef</code>是观察者，每个 Observer 都包含了一个回调（函数指针），当 RunLoop 的状态发生变化时，观察者就能通过回调接收到这个变化。可以观测的时间点有以下几个：</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">typedef CF_OPTIONS(CFOptionFlags, CFRunLoopActivity) &#123;</span><br><span class="line">    kCFRunLoopEntry         = (1UL &lt;&lt; 0), // 即将进入Loop</span><br><span class="line">    kCFRunLoopBeforeTimers  = (1UL &lt;&lt; 1), // 即将处理 Timer</span><br><span class="line">    kCFRunLoopBeforeSources = (1UL &lt;&lt; 2), // 即将处理 Source</span><br><span class="line">    kCFRunLoopBeforeWaiting = (1UL &lt;&lt; 5), // 即将进入休眠</span><br><span class="line">    kCFRunLoopAfterWaiting  = (1UL &lt;&lt; 6), // 刚从休眠中唤醒</span><br><span class="line">    kCFRunLoopExit          = (1UL &lt;&lt; 7), // 即将退出Loop</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <p>上面的 Source/Timer/Observer 被统称为 mode item，一个 item 可以被同时加入多个 mode。但一个 item 被重复加入同一个 mode 时是不会有效果的。如果一个 mode 中一个 item 都没有，则 RunLoop 会直接退出，不进入循环。</p>
 <h2 id="RunLoop-Modes"><a href="#RunLoop-Modes" class="headerlink" title="RunLoop Modes"></a>RunLoop Modes</h2><table>
 <thead>
 <tr>
-<th style="text-align:left">Mode</th>
-<th style="text-align:left">Name</th>
-<th style="text-align:left">Description</th>
+<th align="left">Mode</th>
+<th align="left">Name</th>
+<th align="left">Description</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:left">Default</td>
-<td style="text-align:left">NSDefaultRunLoopMode kCFRunLoopDefaultMode</td>
-<td style="text-align:left">用的最多的模式，大多数情况下应该使用该模式开始 RunLoop并配置 input source</td>
+<tbody><tr>
+<td align="left">Default</td>
+<td align="left">NSDefaultRunLoopMode kCFRunLoopDefaultMode</td>
+<td align="left">用的最多的模式，大多数情况下应该使用该模式开始 RunLoop并配置 input source</td>
 </tr>
 <tr>
-<td style="text-align:left">Connection</td>
-<td style="text-align:left">NSConnectionReplyMode</td>
-<td style="text-align:left">Cocoa用这个模式结合 NSConnection 对象监测回应，你应该很少用这个模式</td>
+<td align="left">Connection</td>
+<td align="left">NSConnectionReplyMode</td>
+<td align="left">Cocoa用这个模式结合 NSConnection 对象监测回应，你应该很少用这个模式</td>
 </tr>
 <tr>
-<td style="text-align:left">Modal</td>
-<td style="text-align:left">NSModalPanelRunLoopMode</td>
-<td style="text-align:left">Cocoa用此模式来标识用于模态面板的事件</td>
+<td align="left">Modal</td>
+<td align="left">NSModalPanelRunLoopMode</td>
+<td align="left">Cocoa用此模式来标识用于模态面板的事件</td>
 </tr>
 <tr>
-<td style="text-align:left">Event tracking</td>
-<td style="text-align:left">NSEventTrackingRunLoopMode</td>
-<td style="text-align:left">Cocoa使用此模式在鼠标拖动loop和其它用户界面跟踪 loop期间限制传入事件</td>
+<td align="left">Event tracking</td>
+<td align="left">NSEventTrackingRunLoopMode</td>
+<td align="left">Cocoa使用此模式在鼠标拖动loop和其它用户界面跟踪 loop期间限制传入事件</td>
 </tr>
 <tr>
-<td style="text-align:left">Common modes</td>
-<td style="text-align:left">NSRunLoopCommonModes kCFRunLoopCommonModes</td>
-<td style="text-align:left">这是一组可配置的常用模式。将输入源与些模式相关联会与组中的每个模式相关联。默认情况下此集包括Default、Modal和Event tracking。Core Foundation只包括默认模式，你可以自己把自定义mode用CFRunLoopAddCommonMode函数加入到集合中.</td>
+<td align="left">Common modes</td>
+<td align="left">NSRunLoopCommonModes kCFRunLoopCommonModes</td>
+<td align="left">这是一组可配置的常用模式。将输入源与些模式相关联会与组中的每个模式相关联。默认情况下此集包括Default、Modal和Event tracking。Core Foundation只包括默认模式，你可以自己把自定义mode用CFRunLoopAddCommonMode函数加入到集合中.</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <h2 id="CFRunLoopMode的结构："><a href="#CFRunLoopMode的结构：" class="headerlink" title="CFRunLoopMode的结构："></a>CFRunLoopMode的结构：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct __CFRunLoopMode &#123;</span><br><span class="line">    CFRuntimeBase _base;</span><br><span class="line">    CFStringRef _name;</span><br><span class="line">    Boolean _stopped;</span><br><span class="line">    CFMutableSetRef _sources0;</span><br><span class="line">    CFMutableSetRef _sources1;</span><br><span class="line">    CFMutableArrayRef _observers;</span><br><span class="line">    CFMutableArrayRef _timers;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <h2 id="CFRunLoop的结构"><a href="#CFRunLoop的结构" class="headerlink" title="CFRunLoop的结构:"></a>CFRunLoop的结构:</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct __CFRunLoop &#123;</span><br><span class="line">    pthread_mutex_t _lock;			/* locked for accessing mode list */</span><br><span class="line">    pthread_t _pthread;</span><br><span class="line">    uint32_t _winthread;</span><br><span class="line">    CFMutableSetRef _commonModes;</span><br><span class="line">    CFMutableSetRef _commonModeItems;</span><br><span class="line">    CFRunLoopModeRef _currentMode;</span><br><span class="line">    CFMutableSetRef _modes;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <h2 id="RunLoop运行逻辑"><a href="#RunLoop运行逻辑" class="headerlink" title="RunLoop运行逻辑"></a>RunLoop运行逻辑</h2><p><img src="/2019/05/19/2019-05-20-runloop/img/runloop/02.png" alt="image"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">void CFRunLoopRun(void) &#123;	/* DOES CALLOUT */</span><br><span class="line">    int32_t result;</span><br><span class="line">    do &#123;</span><br><span class="line">        result = CFRunLoopRunSpecific(CFRunLoopGetCurrent(), kCFRunLoopDefaultMode, 1.0e10, false);</span><br><span class="line">        CHECK_FOR_FORK();</span><br><span class="line">    &#125; while (kCFRunLoopRunStopped != result &amp;&amp; kCFRunLoopRunFinished != result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SInt32 CFRunLoopRunInMode(CFStringRef modeName, CFTimeInterval seconds, Boolean returnAfterSourceHandled) &#123;     /* DOES CALLOUT */</span><br><span class="line">    CHECK_FOR_FORK();</span><br><span class="line">    return CFRunLoopRunSpecific(CFRunLoopGetCurrent(), modeName, seconds, returnAfterSourceHandled);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SInt32 CFRunLoopRunSpecific(CFRunLoopRef rl, CFStringRef modeName, CFTimeInterval seconds, Boolean returnAfterSourceHandled) &#123;     /* DOES CALLOUT */</span><br><span class="line">    CHECK_FOR_FORK();</span><br><span class="line">    if (__CFRunLoopIsDeallocating(rl)) return kCFRunLoopRunFinished;</span><br><span class="line">    __CFRunLoopLock(rl);</span><br><span class="line">    CFRunLoopModeRef currentMode = __CFRunLoopFindMode(rl, modeName, false);</span><br><span class="line">    if (NULL == currentMode || __CFRunLoopModeIsEmpty(rl, currentMode, rl-&gt;_currentMode)) &#123;</span><br><span class="line">	Boolean did = false;</span><br><span class="line">	if (currentMode) __CFRunLoopModeUnlock(currentMode);</span><br><span class="line">	__CFRunLoopUnlock(rl);</span><br><span class="line">	return did ? kCFRunLoopRunHandledSource : kCFRunLoopRunFinished;</span><br><span class="line">    &#125;</span><br><span class="line">    volatile _per_run_data *previousPerRun = __CFRunLoopPushPerRunData(rl);</span><br><span class="line">    CFRunLoopModeRef previousMode = rl-&gt;_currentMode;</span><br><span class="line">    rl-&gt;_currentMode = currentMode;</span><br><span class="line">    int32_t result = kCFRunLoopRunFinished;</span><br><span class="line"></span><br><span class="line">	if (currentMode-&gt;_observerMask &amp; kCFRunLoopEntry ) __CFRunLoopDoObservers(rl, currentMode, kCFRunLoopEntry);</span><br><span class="line">	// 关键代码</span><br><span class="line">	result = __CFRunLoopRun(rl, currentMode, seconds, returnAfterSourceHandled, previousMode);</span><br><span class="line">	if (currentMode-&gt;_observerMask &amp; kCFRunLoopExit ) __CFRunLoopDoObservers(rl, currentMode, kCFRunLoopExit);</span><br><span class="line"></span><br><span class="line">        __CFRunLoopModeUnlock(currentMode);</span><br><span class="line">        __CFRunLoopPopPerRunData(rl, previousPerRun);</span><br><span class="line">	rl-&gt;_currentMode = previousMode;</span><br><span class="line">    __CFRunLoopUnlock(rl);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>在<code>__CFRunLoopDoObservers</code>里面通过<code>__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__</code>回调出去；实际上 <code>RunLoop</code> 里面一直在循环调用自己，当调用<code>CFRunLoopRun()</code>时，线程就会一直停留在这个循环里，直到<code>__CFRunLoopIsDeallocating(rl)</code>超时或者被手动停止，函数直接 return，不会再调用自己。</p>
 <h2 id="RunLoop实用功能"><a href="#RunLoop实用功能" class="headerlink" title="RunLoop实用功能"></a>RunLoop实用功能</h2><h3 id="AutoreleasePool"><a href="#AutoreleasePool" class="headerlink" title="AutoreleasePool"></a>AutoreleasePool</h3><p>App启动后，苹果在主线程 <code>RunLoop</code> 里注册了两个 <code>Observer</code>，其回调都是 <code>_wrapRunLoopWithAutoreleasePoolHandler()</code>。<br>第一个 <code>Observer</code> 监视的事件是 <code>Entry</code>(即将进入Loop)，其回调内会调用 <code>_objc_autoreleasePoolPush()</code> 创建自动释放池。其 order 是-2147483647，优先级最高，保证创建释放池发生在其他所有回调之前。<br>第二个 <code>Observer</code> 监视了两个事件： <code>BeforeWaiting</code>(准备进入休眠) 时调用<code>_objc_autoreleasePoolPop()</code> 和 <code>_objc_autoreleasePoolPush()</code> 释放旧的池并创建新池；<code>Exit</code>(即将退出Loop) 时调用 <code>_objc_autoreleasePoolPop()</code> 来释放自动释放池。这个 Observer 的 order 是 2147483647，优先级最低，保证其释放池子发生在其他所有回调之后。</p>
 <h3 id="事件响应"><a href="#事件响应" class="headerlink" title="事件响应"></a>事件响应</h3><p>苹果注册了一个 <code>Source1</code> (基于 mach port 的) 用来接收系统事件，其回调函数为 <code>__IOHIDEventSystemClientQueueCallback()</code>。<br>当一个硬件事件(触摸/锁屏/摇晃等)发生后，首先由 <code>IOKit.framework</code> 生成一个 <code>IOHIDEvent</code> 事件并由 <code>SpringBoard</code> 接收。<code>SpringBoard</code> 只接收按键(锁屏/静音等)，触摸，加速，接近传感器等几种 <code>Event</code>，随后用 <code>mach port</code> 转发给需要的App进程。随后苹果注册的那个 <code>Source1</code> 就会触发回调，并调用 <code>_UIApplicationHandleEventQueue()</code> 进行应用内部的分发。<br><code>_UIApplicationHandleEventQueue()</code> 会把 <code>IOHIDEvent</code> 处理并包装成 <code>UIEvent</code> 进行处理或分发，其中包括识别 UIGesture/处理屏幕旋转/发送给 <code>UIWindow</code> 等。通常事件比如 <code>UIButton</code> 点击、<code>touchesBegin/Move/End/Cancel</code> 事件都是在这个回调中完成的。</p>
@@ -461,8 +464,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2013/02/23/2013-02-23-检测点11-1/" rel="next" title="检测点11.1">
-                <i class="fa fa-chevron-left"></i> 检测点11.1
+              <a href="/2019/05/19/2019-05-20-Appium/" rel="next" title="Appium 安装">
+                <i class="fa fa-chevron-left"></i> Appium 安装
               </a>
             
           </div>
@@ -471,8 +474,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/19/2019-05-20-计算机如何运算加减乘除/" rel="prev" title="计算机如何运算加减乘除">
-                计算机如何运算加减乘除 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/19/2019-05-20-if else 和 switch的比较/" rel="prev" title="if else 和 switch的比较">
+                if else 和 switch的比较 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -548,7 +551,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="ruby,iOS,">
+  <meta name="keywords" content="iOS,ruby,">
 
 
 
@@ -95,7 +95,7 @@
 
 
 <meta name="description" content="CocoaPods 是什么 CocoaPods 是使用 ruby 编写的开发 iOS 项目的库管理工具。它拥有超过 55,000 个库，并在超过 300 万个应用程序中使用。通过 CocoaPods 可以帮助我们优雅地扩展项目，便捷的导入第三方开源库。 多人开发使用 CocoaPods 的问题 有时候大家由于安装 CocoaPods 的版本不同，会造成生成的 .xcodeproj 文件发生冲突。这">
-<meta name="keywords" content="ruby,iOS">
+<meta name="keywords" content="iOS,ruby">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决多人开发cocoapods版本不同冲突的问题">
 <meta property="og:url" content="https://dylandu123.github.io/2019/05/19/2019-05-20-解决多人开发cocoapods版本不同冲突的问题/index.html">
@@ -356,12 +356,18 @@
 <p><a href="https://github.com/CocoaPods/CocoaPods" target="_blank" rel="noopener">CocoaPods</a> 是使用 ruby 编写的开发 iOS 项目的库管理工具。它拥有超过 55,000 个库，并在超过 300 万个应用程序中使用。通过 <a href="https://github.com/CocoaPods/CocoaPods" target="_blank" rel="noopener">CocoaPods</a> 可以帮助我们优雅地扩展项目，便捷的导入第三方开源库。</p>
 <h2 id="多人开发使用-CocoaPods-的问题"><a href="#多人开发使用-CocoaPods-的问题" class="headerlink" title="多人开发使用 CocoaPods 的问题"></a>多人开发使用 CocoaPods 的问题</h2><hr>
 <p>有时候大家由于安装 CocoaPods 的版本不同，会造成生成的 .xcodeproj 文件发生冲突。这时就需要开发者指定 CocoaPods 的版本来避免这一冲突。</p>
-<p>首先安装 Bundle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install bundler</span><br></pre></td></tr></table></figure></p>
+<p>首先安装 Bundle</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install bundler</span><br></pre></td></tr></table></figure>
+
 <p>创建 gemfile 文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle init</span><br></pre></td></tr></table></figure>
+
 <p>这样，工程目录中就会多出一个 Gemfile 文件<br>可以在 Gemfile 文件中添加如下代码 指定使用的 CocoaPods 版本</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source &quot;https://rubygems.org&quot;</span><br><span class="line">gem &apos;cocoapods&apos;, &apos;1.5.3&apos;</span><br></pre></td></tr></table></figure>
-<p>到这里，管理工具已经安装完毕。<br>以后使用 CocoaPods 的用法只需要 在之前的命令前加上 <code>bundle exec</code> 就可以使用 Gemfile 指定的 CocoaPods 版本了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bundle exec pod install</span><br><span class="line">bundle exec pod update</span><br></pre></td></tr></table></figure></p>
+
+<p>到这里，管理工具已经安装完毕。<br>以后使用 CocoaPods 的用法只需要 在之前的命令前加上 <code>bundle exec</code> 就可以使用 Gemfile 指定的 CocoaPods 版本了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bundle exec pod install</span><br><span class="line">bundle exec pod update</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -379,9 +385,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ruby/" rel="tag"># ruby</a>
-          
             <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/ruby/" rel="tag"># ruby</a>
           
         </div>
       
@@ -394,8 +400,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/19/2019-05-20-if else 和 switch的比较/" rel="next" title="if else 和 switch的比较">
-                <i class="fa fa-chevron-left"></i> if else 和 switch的比较
+              <a href="/2019/05/19/2019-05-20-计算机如何运算加减乘除/" rel="next" title="计算机如何运算加减乘除">
+                <i class="fa fa-chevron-left"></i> 计算机如何运算加减乘除
               </a>
             
           </div>
@@ -481,7 +487,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

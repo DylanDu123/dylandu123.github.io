@@ -368,10 +368,8 @@ s:      mov ax,[bx]
         mov ax,4c00h
         int 21h
 codesg ends
-end start
-</code></pre><p>答案</p>
-<pre><code>mov cs:[bx],ax
-</code></pre><h2 id="下面的程序实现依次用内存-0-0-0-15-单元中的内容改写程序中的数据，数据的传送用栈来进行。栈空间设置在程序内。完成程序"><a href="#下面的程序实现依次用内存-0-0-0-15-单元中的内容改写程序中的数据，数据的传送用栈来进行。栈空间设置在程序内。完成程序" class="headerlink" title="下面的程序实现依次用内存 0:0~0:15 单元中的内容改写程序中的数据，数据的传送用栈来进行。栈空间设置在程序内。完成程序:"></a>下面的程序实现依次用内存 0:0~0:15 单元中的内容改写程序中的数据，数据的传送用栈来进行。栈空间设置在程序内。完成程序:</h2><pre><code>assume cs:codesg
+end start</code></pre><p>答案</p>
+<pre><code>mov cs:[bx],ax</code></pre><h2 id="下面的程序实现依次用内存-0-0-0-15-单元中的内容改写程序中的数据，数据的传送用栈来进行。栈空间设置在程序内。完成程序"><a href="#下面的程序实现依次用内存-0-0-0-15-单元中的内容改写程序中的数据，数据的传送用栈来进行。栈空间设置在程序内。完成程序" class="headerlink" title="下面的程序实现依次用内存 0:0~0:15 单元中的内容改写程序中的数据，数据的传送用栈来进行。栈空间设置在程序内。完成程序:"></a>下面的程序实现依次用内存 0:0~0:15 单元中的内容改写程序中的数据，数据的传送用栈来进行。栈空间设置在程序内。完成程序:</h2><pre><code>assume cs:codesg
 codesg segment
     dw 0123h,0456h,0789h,0abch,0defh,0fedh,0cbah,0987h
     dw 0,0,0,0,0,0,0,0,0,0
@@ -393,8 +391,7 @@ s:  push [bx]
     mov ax, 4c00h
     int
 codesg ends
-end start
-</code></pre><p>结题步骤<br>1.设置栈段（ss）和代码段（cs）<br>2.设置栈底<br>3.取出数据</p>
+end start</code></pre><p>结题步骤<br>1.设置栈段（ss）和代码段（cs）<br>2.设置栈底<br>3.取出数据</p>
 
       
     </div>
@@ -512,7 +509,7 @@ end start
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

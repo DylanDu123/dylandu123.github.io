@@ -371,27 +371,23 @@ start: mov ax,stack
     retf
 
 code ends
-end start
-</code></pre><h2 id="10-2下面的程序执行后，ax中的数值为多少？"><a href="#10-2下面的程序执行后，ax中的数值为多少？" class="headerlink" title="10.2下面的程序执行后，ax中的数值为多少？"></a>10.2下面的程序执行后，ax中的数值为多少？</h2><pre><code>内存地址    机器码      汇编指令     执行后情况
+end start</code></pre><h2 id="10-2下面的程序执行后，ax中的数值为多少？"><a href="#10-2下面的程序执行后，ax中的数值为多少？" class="headerlink" title="10.2下面的程序执行后，ax中的数值为多少？"></a>10.2下面的程序执行后，ax中的数值为多少？</h2><pre><code>内存地址    机器码      汇编指令     执行后情况
 1000:0     b8 00 00   mov ax,0     ax=0 ip指向1000:3
 1000:3     e8 01 00   call s       ax=0 ip指向1000:6
 1000:6     40         inc ax       
-1000:7     58         s:pop ax     ax=6
-</code></pre><h2 id="10-3下面的程序执行后，ax中的数值为多少？"><a href="#10-3下面的程序执行后，ax中的数值为多少？" class="headerlink" title="10.3下面的程序执行后，ax中的数值为多少？"></a>10.3下面的程序执行后，ax中的数值为多少？</h2><pre><code>内存地址   机器码             汇编指令            执行后情况
+1000:7     58         s:pop ax     ax=6</code></pre><h2 id="10-3下面的程序执行后，ax中的数值为多少？"><a href="#10-3下面的程序执行后，ax中的数值为多少？" class="headerlink" title="10.3下面的程序执行后，ax中的数值为多少？"></a>10.3下面的程序执行后，ax中的数值为多少？</h2><pre><code>内存地址   机器码             汇编指令            执行后情况
 1000:0    b8 00 00          mov ax,0           ax=0,ip指向1000:3
 1000:3    9a 09 00 00 10    call far ptr s     ip指向1000:8,push cs,push ip,ip指向1000:9
 1000:8    40                inc ax
 1000:9    58                s:pop ax           ax=8h
                             add ax,ax          ax=10h
                             pop bx             bx=1000h
-                            add ax,bx          ax=1010h
-</code></pre><h2 id="10-4下面的程序执行后，ax中的数值为多少？"><a href="#10-4下面的程序执行后，ax中的数值为多少？" class="headerlink" title="10.4下面的程序执行后，ax中的数值为多少？"></a>10.4下面的程序执行后，ax中的数值为多少？</h2><pre><code>内存地址   机器码             汇编指令            执行后情况
+                            add ax,bx          ax=1010h</code></pre><h2 id="10-4下面的程序执行后，ax中的数值为多少？"><a href="#10-4下面的程序执行后，ax中的数值为多少？" class="headerlink" title="10.4下面的程序执行后，ax中的数值为多少？"></a>10.4下面的程序执行后，ax中的数值为多少？</h2><pre><code>内存地址   机器码             汇编指令            执行后情况
 1000:0    b8 06 00          mov ax,6          ax=6,ip指向1000:3
 1000:3    ff d0             call ax           ip指向1000:5,push ip,ip指向1000:6
 1000:5    40                inc ax
 1000:6    58                mov bp,sp         
-                            add ax,[bp]       ax=0bh
-</code></pre><p>“call 16位寄存器”这条指令相当于进行如下的操作： push ip  ， jmp 16位寄存器。所以有先把sp的值减去二，然后把0005入栈，接着是jmp ax即把ax的值去修改ip的值，执行完call ax之后，ip的值为6。因为现在sp的值是指向存放0005的下一个内存单元，比如原来sp的值是10h，sp先减去2，然后把0005压入栈内。这里吧sp送给bp，则内存单元[bp]代表的就是ss:[bp]这个单元。所以add ax,[bp]就是把刚压入栈的值0005加上ax的值后送给ax。最后ax为5+6=11即0bh。</p>
+                            add ax,[bp]       ax=0bh</code></pre><p>“call 16位寄存器”这条指令相当于进行如下的操作： push ip  ， jmp 16位寄存器。所以有先把sp的值减去二，然后把0005入栈，接着是jmp ax即把ax的值去修改ip的值，执行完call ax之后，ip的值为6。因为现在sp的值是指向存放0005的下一个内存单元，比如原来sp的值是10h，sp先减去2，然后把0005压入栈内。这里吧sp送给bp，则内存单元[bp]代表的就是ss:[bp]这个单元。所以add ax,[bp]就是把刚压入栈的值0005加上ax的值后送给ax。最后ax为5+6=11即0bh。</p>
 <h2 id="10-5-1-下面的程序执行后，ax中的数值为多少？（注意用call指令的原理来分析，不要在Debug中单步跟踪来验证你的结论。对于此程序，在Debug中单步跟踪的结果，不能代表CPU的实际执行结果）"><a href="#10-5-1-下面的程序执行后，ax中的数值为多少？（注意用call指令的原理来分析，不要在Debug中单步跟踪来验证你的结论。对于此程序，在Debug中单步跟踪的结果，不能代表CPU的实际执行结果）" class="headerlink" title="10.5.1 下面的程序执行后，ax中的数值为多少？（注意用call指令的原理来分析，不要在Debug中单步跟踪来验证你的结论。对于此程序，在Debug中单步跟踪的结果，不能代表CPU的实际执行结果）"></a>10.5.1 下面的程序执行后，ax中的数值为多少？（注意用call指令的原理来分析，不要在Debug中单步跟踪来验证你的结论。对于此程序，在Debug中单步跟踪的结果，不能代表CPU的实际执行结果）</h2><pre><code>assume cs:codesg
 stack segment 
     dw 8 dup (0)
@@ -411,8 +407,7 @@ start:
     mov ax,4c00h
     int 21h        
 codesg ends 
-end   start
-</code></pre><p><code>call word ptr ds:[0EH]</code>执行的时候，将第一个<code>inc ax</code>的ip入栈，然后跳转到<code>ds:[0EH]</code>中继续执行，而<code>ds:[0EH]</code>中的值正好是第一个<code>inc ax</code>的ip。所以 ax=3</p>
+end   start</code></pre><p><code>call word ptr ds:[0EH]</code>执行的时候，将第一个<code>inc ax</code>的ip入栈，然后跳转到<code>ds:[0EH]</code>中继续执行，而<code>ds:[0EH]</code>中的值正好是第一个<code>inc ax</code>的ip。所以 ax=3</p>
 <h2 id="10-5-2-下面的程序执行后-ax-和-bx-的值是什么"><a href="#10-5-2-下面的程序执行后-ax-和-bx-的值是什么" class="headerlink" title="10.5.2 下面的程序执行后 , ax 和 bx 的值是什么 ?"></a>10.5.2 下面的程序执行后 , ax 和 bx 的值是什么 ?</h2><pre><code>assume cs:code,ds:data
 data segment
     dw 8 dup(0)
@@ -432,8 +427,7 @@ code segment
         mov bx, cs
         sub bx, ss:[0EH]
 code ends
-end start
-</code></pre><p>都是0</p>
+end start</code></pre><p>都是0</p>
 
       
     </div>
@@ -551,7 +545,7 @@ end start
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

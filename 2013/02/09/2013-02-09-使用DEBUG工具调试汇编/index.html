@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="D (Dump) 显示内存单元内容 内存以16进制显示-D [地址] -D [范围] P 执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部-p E（Enter）修改内存字节-E 地址 内容表 例如    修改指定范围内容    -E DS:100 43 8D F7    查看修改后的内容    -D DS:100 R（Register）显示CPU内部所有寄存器内容和标志位状态 可以修改寄存">
+<meta name="description" content="D (Dump) 显示内存单元内容 内存以16进制显示-D [地址] -D [范围]P 执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部-pE（Enter）修改内存字节-E 地址 内容表例如    修改指定范围内容    -E DS:100 43 8D F7    查看修改后的内容    -D DS:100 R（Register）显示CPU内部所有寄存器内容和标志位状态 可以修改寄存器显示">
 <meta name="keywords" content="汇编">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用DEBUG工具调试汇编">
 <meta property="og:url" content="https://dylandu123.github.io/2013/02/09/2013-02-09-使用DEBUG工具调试汇编/index.html">
 <meta property="og:site_name" content="勤能补拙">
-<meta property="og:description" content="D (Dump) 显示内存单元内容 内存以16进制显示-D [地址] -D [范围] P 执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部-p E（Enter）修改内存字节-E 地址 内容表 例如    修改指定范围内容    -E DS:100 43 8D F7    查看修改后的内容    -D DS:100 R（Register）显示CPU内部所有寄存器内容和标志位状态 可以修改寄存">
+<meta property="og:description" content="D (Dump) 显示内存单元内容 内存以16进制显示-D [地址] -D [范围]P 执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部-pE（Enter）修改内存字节-E 地址 内容表例如    修改指定范围内容    -E DS:100 43 8D F7    查看修改后的内容    -D DS:100 R（Register）显示CPU内部所有寄存器内容和标志位状态 可以修改寄存器显示">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-07-25T12:47:20.965Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用DEBUG工具调试汇编">
-<meta name="twitter:description" content="D (Dump) 显示内存单元内容 内存以16进制显示-D [地址] -D [范围] P 执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部-p E（Enter）修改内存字节-E 地址 内容表 例如    修改指定范围内容    -E DS:100 43 8D F7    查看修改后的内容    -D DS:100 R（Register）显示CPU内部所有寄存器内容和标志位状态 可以修改寄存">
+<meta name="twitter:description" content="D (Dump) 显示内存单元内容 内存以16进制显示-D [地址] -D [范围]P 执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部-pE（Enter）修改内存字节-E 地址 内容表例如    修改指定范围内容    -E DS:100 43 8D F7    查看修改后的内容    -D DS:100 R（Register）显示CPU内部所有寄存器内容和标志位状态 可以修改寄存器显示">
 
 
 
@@ -353,51 +353,33 @@
 
       
         <h2 id="D-Dump-显示内存单元内容-内存以16进制显示"><a href="#D-Dump-显示内存单元内容-内存以16进制显示" class="headerlink" title="D (Dump) 显示内存单元内容 内存以16进制显示"></a>D (Dump) 显示内存单元内容 内存以16进制显示</h2><pre><code>-D [地址]
--D [范围]
-</code></pre><h2 id="P-执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部"><a href="#P-执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部" class="headerlink" title="P 执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部"></a>P 执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部</h2><pre><code>-p
-</code></pre><h2 id="E（Enter）修改内存字节"><a href="#E（Enter）修改内存字节" class="headerlink" title="E（Enter）修改内存字节"></a>E（Enter）修改内存字节</h2><pre><code>-E 地址 内容表
-</code></pre><p>例如<br>    修改指定范围内容<br>    -E DS:100 43 8D F7<br>    查看修改后的内容<br>    -D DS:100</p>
-<h2 id="R（Register）显示CPU内部所有寄存器内容和标志位状态-可以修改寄存器"><a href="#R（Register）显示CPU内部所有寄存器内容和标志位状态-可以修改寄存器" class="headerlink" title="R（Register）显示CPU内部所有寄存器内容和标志位状态 可以修改寄存器"></a>R（Register）显示CPU内部所有寄存器内容和标志位状态 可以修改寄存器</h2><h4 id="显示和修改某个寄存器的内容"><a href="#显示和修改某个寄存器的内容" class="headerlink" title="显示和修改某个寄存器的内容"></a>显示和修改某个寄存器的内容</h4><pre><code>-R 寄存器名
-</code></pre><p>例如</p>
+-D [范围]</code></pre><h2 id="P-执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部"><a href="#P-执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部" class="headerlink" title="P 执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部"></a>P 执行循环、重复的字符串指令、软件中断或子例程。不跟踪内部</h2><pre><code>-p</code></pre><h2 id="E（Enter）修改内存字节"><a href="#E（Enter）修改内存字节" class="headerlink" title="E（Enter）修改内存字节"></a>E（Enter）修改内存字节</h2><pre><code>-E 地址 内容表</code></pre><p>例如<br>    修改指定范围内容<br>    -E DS:100 43 8D F7<br>    查看修改后的内容<br>    -D DS:100</p>
+<h2 id="R（Register）显示CPU内部所有寄存器内容和标志位状态-可以修改寄存器"><a href="#R（Register）显示CPU内部所有寄存器内容和标志位状态-可以修改寄存器" class="headerlink" title="R（Register）显示CPU内部所有寄存器内容和标志位状态 可以修改寄存器"></a>R（Register）显示CPU内部所有寄存器内容和标志位状态 可以修改寄存器</h2><h4 id="显示和修改某个寄存器的内容"><a href="#显示和修改某个寄存器的内容" class="headerlink" title="显示和修改某个寄存器的内容"></a>显示和修改某个寄存器的内容</h4><pre><code>-R 寄存器名</code></pre><p>例如</p>
 <pre><code>查看修改后的内容
 -R
 修改指定范围内容
 -R AX
 查看修改后的内容
--R
-</code></pre><p>如果不想要修改修改AX的内容，可以在：出现后，直接回车就取消修改了。可以拿来查看寄存器中存储数据的内容。</p>
+-R</code></pre><p>如果不想要修改修改AX的内容，可以在：出现后，直接回车就取消修改了。可以拿来查看寄存器中存储数据的内容。</p>
 <pre><code>-R AX
 AX 0000
-:                ----&gt;直接回车（Enter）退出
-</code></pre><h2 id="G（Go）结束-运行命令"><a href="#G（Go）结束-运行命令" class="headerlink" title="G（Go）结束 运行命令"></a>G（Go）结束 运行命令</h2><pre><code>-G [=地址1][地址2[地址3......]]
-</code></pre><p>　　其中，地址1规定了运行起始地址，后面的若干地址均为断点地址。</p>
-<h2 id="T（Trace）跟踪执行-追踪命令T"><a href="#T（Trace）跟踪执行-追踪命令T" class="headerlink" title="T（Trace）跟踪执行 追踪命令T"></a>T（Trace）跟踪执行 追踪命令T</h2><h4 id="逐条指令追踪"><a href="#逐条指令追踪" class="headerlink" title="逐条指令追踪"></a>逐条指令追踪</h4><pre><code>-T [地址]
-</code></pre><p>该命令从指定地址起执行一条指令后停下来，显示寄存器内容和状态值。</p>
-<h4 id="多条命令追踪"><a href="#多条命令追踪" class="headerlink" title="多条命令追踪"></a>多条命令追踪</h4><pre><code>-T [地址][值]
-</code></pre><p>该命令从指定地址起执行后停下来，n由[值]确定。</p>
-<h2 id="A（Assemble）逐行汇编-汇编命令A"><a href="#A（Assemble）逐行汇编-汇编命令A" class="headerlink" title="A（Assemble）逐行汇编 汇编命令A"></a>A（Assemble）逐行汇编 汇编命令A</h2><pre><code>-A [地址]
-</code></pre><p>该命令从指定地址开始允许输入汇编语句，把它们汇编成机器代码相继存放在从指定地址开始的存储器中。</p>
+:                ----&gt;直接回车（Enter）退出</code></pre><h2 id="G（Go）结束-运行命令"><a href="#G（Go）结束-运行命令" class="headerlink" title="G（Go）结束 运行命令"></a>G（Go）结束 运行命令</h2><pre><code>-G [=地址1][地址2[地址3......]]</code></pre><p>　　其中，地址1规定了运行起始地址，后面的若干地址均为断点地址。</p>
+<h2 id="T（Trace）跟踪执行-追踪命令T"><a href="#T（Trace）跟踪执行-追踪命令T" class="headerlink" title="T（Trace）跟踪执行 追踪命令T"></a>T（Trace）跟踪执行 追踪命令T</h2><h4 id="逐条指令追踪"><a href="#逐条指令追踪" class="headerlink" title="逐条指令追踪"></a>逐条指令追踪</h4><pre><code>-T [地址]</code></pre><p>该命令从指定地址起执行一条指令后停下来，显示寄存器内容和状态值。</p>
+<h4 id="多条命令追踪"><a href="#多条命令追踪" class="headerlink" title="多条命令追踪"></a>多条命令追踪</h4><pre><code>-T [地址][值]</code></pre><p>该命令从指定地址起执行后停下来，n由[值]确定。</p>
+<h2 id="A（Assemble）逐行汇编-汇编命令A"><a href="#A（Assemble）逐行汇编-汇编命令A" class="headerlink" title="A（Assemble）逐行汇编 汇编命令A"></a>A（Assemble）逐行汇编 汇编命令A</h2><pre><code>-A [地址]</code></pre><p>该命令从指定地址开始允许输入汇编语句，把它们汇编成机器代码相继存放在从指定地址开始的存储器中。</p>
 <h2 id="U（Unassemble）反汇编-反汇编指令U"><a href="#U（Unassemble）反汇编-反汇编指令U" class="headerlink" title="U（Unassemble）反汇编 反汇编指令U"></a>U（Unassemble）反汇编 反汇编指令U</h2><p>按地址反汇编</p>
 <p>该命令从指定地址开始，反汇编32个字节，若地址省略，则从上一个U命令的最后一个指令的下一个单元开始显示32个字节。 </p>
-<pre><code>-U [地址]
-</code></pre><p>　　</p>
+<pre><code>-U [地址]</code></pre><p>　　</p>
 <p>按范围反汇编</p>
 <p>该指令对指定范围的内存单元进行反汇编。 </p>
-<pre><code>-U 范围
-</code></pre><h2 id="N（Name）置文件名-命名命令N"><a href="#N（Name）置文件名-命名命令N" class="headerlink" title="N（Name）置文件名 命名命令N"></a>N（Name）置文件名 命名命令N</h2><pre><code>-N 文件标识符 [文件标识符]
-</code></pre><p>此命令将两个文件标志符格式化在CS:5CH和CS:6CH的两个文件控制块里面，以便使用L或者是W命令把文件装入或者存盘。</p>
+<pre><code>-U 范围</code></pre><h2 id="N（Name）置文件名-命名命令N"><a href="#N（Name）置文件名-命名命令N" class="headerlink" title="N（Name）置文件名 命名命令N"></a>N（Name）置文件名 命名命令N</h2><pre><code>-N 文件标识符 [文件标识符]</code></pre><p>此命令将两个文件标志符格式化在CS:5CH和CS:6CH的两个文件控制块里面，以便使用L或者是W命令把文件装入或者存盘。</p>
 <h2 id="L（Load）读盘-装入命令L"><a href="#L（Load）读盘-装入命令L" class="headerlink" title="L（Load）读盘 装入命令L"></a>L（Load）读盘 装入命令L</h2><p>把磁盘上指定扇区的内容装入到内存指定地址起始的单元中，格式为：</p>
-<pre><code>-L 地址 驱动器 扇区号 扇区数
-</code></pre><p>装入到指定文件中，格式为：</p>
-<pre><code>-L [地址]
-</code></pre><p>此命令已在CS:5CH中格式化的文件控制块所制定的文件。 在用L命令前，BX和CX中应包含所读文件的字节数。</p>
+<pre><code>-L 地址 驱动器 扇区号 扇区数</code></pre><p>装入到指定文件中，格式为：</p>
+<pre><code>-L [地址]</code></pre><p>此命令已在CS:5CH中格式化的文件控制块所制定的文件。 在用L命令前，BX和CX中应包含所读文件的字节数。</p>
 <h2 id="W（Write）存盘-写命令W"><a href="#W（Write）存盘-写命令W" class="headerlink" title="W（Write）存盘 写命令W"></a>W（Write）存盘 写命令W</h2><p>把数据写入到磁盘的指定扇区：</p>
-<pre><code>-W 地址 驱动器 扇区号 扇区数
-</code></pre><p>把数据写入到指定文件中：</p>
-<pre><code>-W [地址]
-</code></pre><p>此命令把指定内存区域中的数据写入由CS:5CH处的FCB所规定的文件中。 在用W命令前，BX和CX中应包含要写入文件的字节数。</p>
-<h2 id="Q（Quit）退出-退出命令Q"><a href="#Q（Quit）退出-退出命令Q" class="headerlink" title="Q（Quit）退出 退出命令Q"></a>Q（Quit）退出 退出命令Q</h2><pre><code>-Q
-</code></pre><p>它退出DEBUG程序，返回DOS，但该命令本身并不把内存中的文件存盘，如需存盘，应在执行Q命令前先执行写命令W。</p>
+<pre><code>-W 地址 驱动器 扇区号 扇区数</code></pre><p>把数据写入到指定文件中：</p>
+<pre><code>-W [地址]</code></pre><p>此命令把指定内存区域中的数据写入由CS:5CH处的FCB所规定的文件中。 在用W命令前，BX和CX中应包含要写入文件的字节数。</p>
+<h2 id="Q（Quit）退出-退出命令Q"><a href="#Q（Quit）退出-退出命令Q" class="headerlink" title="Q（Quit）退出 退出命令Q"></a>Q（Quit）退出 退出命令Q</h2><pre><code>-Q</code></pre><p>它退出DEBUG程序，返回DOS，但该命令本身并不把内存中的文件存盘，如需存盘，应在执行Q命令前先执行写命令W。</p>
 <h1 id="DEBUG调试过程"><a href="#DEBUG调试过程" class="headerlink" title="DEBUG调试过程"></a>DEBUG调试过程</h1><ul>
 <li>编写源代码XX.asm文件</li>
 <li>在debug中键入xx.asm</li>
@@ -525,7 +507,7 @@ AX 0000
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -102,12 +102,12 @@
 <meta property="og:site_name" content="勤能补拙">
 <meta property="og:description" content="参考文章《概率论与数理统计》浙大版（第四版）教材百度百科  基本概念条件概率条件概率是指事件A在另外一个事件B已经发生条件下的发生概率。条件概率表示为：P（A|B），读作“在B的条件下A的概率”。条件概率可以用决策树进行计算。若只有两个事件A，B，那么$$P(A|B)=\frac{P(A|B)}{P(B)}$$ 概率测度如果事件 B 的概率 P(B) &amp;gt; 0那么 Q(A) = P(A |">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://dylandu123.github.io/2019/07/05/2019-07-05-条件概率公式/1.png">
+<meta property="og:image" content="https://dylandu123.github.io/2019/07/05/2019-07-05-条件概率公式/2019-07-05-%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87%E5%85%AC%E5%BC%8F/1.png">
 <meta property="og:updated_time" content="2019-11-30T05:59:33.210Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="条件概率公式">
 <meta name="twitter:description" content="参考文章《概率论与数理统计》浙大版（第四版）教材百度百科  基本概念条件概率条件概率是指事件A在另外一个事件B已经发生条件下的发生概率。条件概率表示为：P（A|B），读作“在B的条件下A的概率”。条件概率可以用决策树进行计算。若只有两个事件A，B，那么$$P(A|B)=\frac{P(A|B)}{P(B)}$$ 概率测度如果事件 B 的概率 P(B) &amp;gt; 0那么 Q(A) = P(A |">
-<meta name="twitter:image" content="https://dylandu123.github.io/2019/07/05/2019-07-05-条件概率公式/1.png">
+<meta name="twitter:image" content="https://dylandu123.github.io/2019/07/05/2019-07-05-条件概率公式/2019-07-05-%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87%E5%85%AC%E5%BC%8F/1.png">
 
 
 
@@ -363,8 +363,8 @@
 <h3 id="定理2"><a href="#定理2" class="headerlink" title="定理2"></a>定理2</h3><p>设E 为随机试验，<code>Ω</code> 为样本空间，<code>A，B</code> 为任意两个事件，设<code>P(A)&gt;0</code>，称 \(P(B|A)=\frac{P(AB)}{P(A)} \) 为在“事件<code>A</code> 发生”的条件下事件<code>B</code> 的条件概率。<br>上述乘法公式可推广到任意有穷多个事件时的情况。<br>设 \( A_1, A_2 \ldots A_n  \) 为任意 <code>n</code> 个事件<code>（n≥2）</code>且 \( P(A_1, A_2 \ldots A_n  ) &gt; 0\)则 \( P(A_1, A_2 \ldots A_n  ) =P(A_1)P(A_2|A_1) \ldots P(A_n|A_1 A_2 \ldots A_{n-1}) \)</p>
 <h3 id="定理3-（全概率公式）"><a href="#定理3-（全概率公式）" class="headerlink" title="定理3 （全概率公式）"></a>定理3 （全概率公式）</h3><p>如果事件\(B_1、B_2、B_3 \ldots B_n\) 构成一个完备事件组，即它们两两互不相容，其和为全集；并且P（Bi)大于0，则对任一事件A有<br>\(P(A)=P(A|B_1)P(B_1) + P(A|B_2)P(B_2) + \ldots + P(A|B_n)P(B_n) = \sum_{i=1}^{n} P(A_i)(B|A_i) \)<br>特别地，对于任意两随机事件A和B，有如下成立<br>\(P(B)=P(B|A)P(A) + P(B|\overline A)P(\overline A)\)</p>
 <h3 id="定理4-（贝叶斯公式）"><a href="#定理4-（贝叶斯公式）" class="headerlink" title="定理4 （贝叶斯公式）"></a>定理4 （贝叶斯公式）</h3><p>通常，事件A在事件B(发生)的条件下的概率，与事件B在事件A的条件下的概率是不一样的；然而，这两者是有确定的关系,贝叶斯法则就是这种关系的陈述。<br>\(P(A_i|B) = \frac{P(B|A_i)P(A_i)}{\sum_{i=1}^{n} P(B|A_i)P(A_i)} \)</p>
-<h2 id="例题一"><a href="#例题一" class="headerlink" title="例题一"></a>例题一</h2><p>\(P(A)=\frac{1}{4}, P(B|A)=\frac{1}{3},P(A|B)=\frac{1}{2},求 P(A \cup B),P(\; \bar{A} \; |A \cup B) \) </p>
-<p>解：<br>\( P(B|A) = \frac{P(A \cap B)}{P(A)} = \frac{1}{3} \)<br>\( P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{1}{2} \)<br>\( P(A \cap B) = P(A)P(B|A) = \frac{1}{12} \)<br>\( P(A) = \frac{1}{4} \)<br>\( P(B) = \frac{1}{6} \)<br>\( P(A \cup B) = P(A) + P(B) - P(A \cap B) = \frac{1}{3} \)<br>\(P(\; \bar{A} \; |A \cup B)  = \frac{P({B}-P(A \cap B))}{P(A \cup B)} = \frac{1}{4}\) </p>
+<h2 id="例题一"><a href="#例题一" class="headerlink" title="例题一"></a>例题一</h2><p>\(P(A)=\frac{1}{4}, P(B|A)=\frac{1}{3},P(A|B)=\frac{1}{2},求 P(A \cup B),P(; \bar{A} ; |A \cup B) \) </p>
+<p>解：<br>\( P(B|A) = \frac{P(A \cap B)}{P(A)} = \frac{1}{3} \)<br>\( P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{1}{2} \)<br>\( P(A \cap B) = P(A)P(B|A) = \frac{1}{12} \)<br>\( P(A) = \frac{1}{4} \)<br>\( P(B) = \frac{1}{6} \)<br>\( P(A \cup B) = P(A) + P(B) - P(A \cap B) = \frac{1}{3} \)<br>\(P(; \bar{A} ; |A \cup B)  = \frac{P({B}-P(A \cap B))}{P(A \cup B)} = \frac{1}{4}\) </p>
 <h2 id="例题二"><a href="#例题二" class="headerlink" title="例题二"></a>例题二</h2><p>一个盒子有五个红球，四个白球，采用不放回抽样，每次取一个，取三次。<br>（1）求前两次中至少有一次取到红球的概率<br>（2）已知前两次中至少有一次取到红球，求前两次中恰有一次取到红球的概率<br>（3）求第1，2次取到红球，第三次取到白球的概率</p>
 <p>解：<br>设<br>\(A_i=\begin{Bmatrix}第i次取到红球事件\end{Bmatrix}\)<br>\(B=\begin{Bmatrix}前面两次当中至少有一次取得红球\end{Bmatrix}\)<br>\(C=\begin{Bmatrix}前面两次当中恰好有一次取得红球\end{Bmatrix}\)<br>则<br>\(P(B) = 1 - P(\overline{B}) = 1- P(\overline{A_1})P(\overline{A_2}|\overline{A_1}) = 1 - \frac{4}{9} \times \frac{3}{8} = \frac{5}{6} \)<br>\(P(C) = 1- P(A_1 A_2|B) =  \frac{2}{3} \)<br>\(P(A_1 A_2 \overline{A_3}) = \frac{5}{9} \times \frac{4}{8} \times \frac{4}{7}=  \frac{10}{63} \)</p>
 <h2 id="例题三"><a href="#例题三" class="headerlink" title="例题三"></a>例题三</h2><p>某人参加某种考核，已知第一次参加能通过的概率是60%，若第一次未通过，第二次参加能通过的概率是70%，若前两次未通过，第二次参加能通过的概率是80%，求此人最多三次就能通过考核的概率。<br>解：<br>设<br>\(A_i=\begin{Bmatrix}第i通过考核\end{Bmatrix}\)</p>
@@ -372,7 +372,7 @@
 <h2 id="例题四"><a href="#例题四" class="headerlink" title="例题四"></a>例题四</h2><p>一小学举办家长开放日，欢迎家长参加活动，小明的母亲参加的概率为80%，若母亲参加，则父亲参加的概率为30%，若母亲不参加，则父亲参加的概率为90%。<br>（1）求父母都参加的概率<br>（2）求父母参加的概率<br>（3）在已知父亲参加的条件下，求母亲参加的概率</p>
 <p>解：<br>设<br>\(A=\begin{Bmatrix}母亲参加\end{Bmatrix}\)<br>\(B=\begin{Bmatrix}父亲参加\end{Bmatrix}\)<br>\(P(A) = 0.8\)<br>\(P(B|A)=0.3\)<br>\(P(B|\overline{A}) = 0.9\)<br>\(P(B|A)= \frac{P(AB)}{P(A)} = 0.3 =&gt; P(AB)=0.24\)<br>\(P(B)= P(A)P(B|A) + P(\overline{A})P(B|\overline{A}) = 0.8 \times 0.3 + 0.2 \times 0.9 = 0.42  \)<br>\(P(A|B)= \frac{P(AB)}{P(B)} = \frac{4}{7} \)</p>
 <h2 id="例题五"><a href="#例题五" class="headerlink" title="例题五"></a>例题五</h2><p>有甲乙两盒，甲盒有三个红球两个白球，乙盒有两个红球，一个白球。先从甲盒中采用不放回抽样取3球放入到乙盒，再从乙盒中取一个球，球取到的是红球的概率。<br>解：<br>设<br>\(A=\begin{Bmatrix}甲盒中取球\end{Bmatrix}\)<br>\(B=\begin{Bmatrix}乙盒中去球\end{Bmatrix}\)<br>\(<br>P(B)=P(B|A_1) \times P(A_1) + P(B|A_2) \times P(A_2) + P(B|A_3) \times P(A_3) =   \\<br>\frac{1}{2} \times \frac{C_{3}^{1}C_{2}^{2}}{C_{5}^{3}} + \frac{2}{3} \times \frac{C_{3}^{2}C_{2}^{1}}{C_{5}^{3}} + \frac{5}{6} \times \frac{C_{3}^{3}}{C_{5}^{3}} = \frac{19}{30} \\<br>\)</p>
-<h2 id="例题六"><a href="#例题六" class="headerlink" title="例题六"></a>例题六</h2><p>根据以往的临床记录某种诊断癌症的试验具有5%的假阳性以及%3的假阴性<br>若设<br> <code>A={试验反应是阳性}</code> <code>C={被诊断患有癌症}</code><br>则有<br>\(P(A| \overline{C}) = 5\% \)<br>\(P(\overline{A}|C) = 3\% \)<br>已知某一群体<code>P(C) = 0.005</code>,问这种方法能否用于普查。<br><img src="/2019/07/05/2019-07-05-条件概率公式/1.png" alt="图片"><br>\(<br>P(C|A) = \frac{P(CA)}{P(A)} = \frac{P(CA)}{P(A|C)P(C) + P(A|\overline{C})P(\overline{C})} = 0.08882783882783883<br>\)</p>
+<h2 id="例题六"><a href="#例题六" class="headerlink" title="例题六"></a>例题六</h2><p>根据以往的临床记录某种诊断癌症的试验具有5%的假阳性以及%3的假阴性<br>若设<br> <code>A={试验反应是阳性}</code> <code>C={被诊断患有癌症}</code><br>则有<br>\(P(A| \overline{C}) = 5% \)<br>\(P(\overline{A}|C) = 3% \)<br>已知某一群体<code>P(C) = 0.005</code>,问这种方法能否用于普查。<br><img src="/2019/07/05/2019-07-05-条件概率公式/2019-07-05-%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87%E5%85%AC%E5%BC%8F/1.png" alt="图片"><br>\(<br>P(C|A) = \frac{P(CA)}{P(A)} = \frac{P(CA)}{P(A|C)P(C) + P(A|\overline{C})P(\overline{C})} = 0.08882783882783883<br>\)</p>
 
       
     </div>
@@ -490,7 +490,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

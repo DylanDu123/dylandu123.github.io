@@ -368,8 +368,7 @@ code segment
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">start:  mov ax,a</span><br><span class="line">        mov ds,ax</span><br><span class="line">        mov bx,0</span><br><span class="line">        mov cx,8</span><br><span class="line">s:      mov al,ds:[bx]</span><br><span class="line">        add al,ds:[16+bx]</span><br><span class="line">        mov ds:[32+bx],al</span><br><span class="line">        add bx,1</span><br><span class="line">        loop s</span><br><span class="line"></span><br><span class="line">        mov ax,4c00h</span><br><span class="line">        int 21h</span><br></pre></td></tr></table></figure>
 
 code ends
-end start
-</code></pre><h2 id="程序如下-编写code段中的代码-用push指令将a段中的前8个字型数据-逆序存储到b段中。"><a href="#程序如下-编写code段中的代码-用push指令将a段中的前8个字型数据-逆序存储到b段中。" class="headerlink" title="程序如下,编写code段中的代码,用push指令将a段中的前8个字型数据,逆序存储到b段中。"></a>程序如下,编写code段中的代码,用push指令将a段中的前8个字型数据,逆序存储到b段中。</h2><pre><code>assume cs: code
+end start</code></pre><h2 id="程序如下-编写code段中的代码-用push指令将a段中的前8个字型数据-逆序存储到b段中。"><a href="#程序如下-编写code段中的代码-用push指令将a段中的前8个字型数据-逆序存储到b段中。" class="headerlink" title="程序如下,编写code段中的代码,用push指令将a段中的前8个字型数据,逆序存储到b段中。"></a>程序如下,编写code段中的代码,用push指令将a段中的前8个字型数据,逆序存储到b段中。</h2><pre><code>assume cs: code
     a segment
         dw 1,2,3,4,5,6,7,8,9,0ah,0bh,0ch,0dh,0eh,0fh,0ffh
     a ends
@@ -382,8 +381,7 @@ code segment
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">start:  mov ax,a</span><br><span class="line">    mov ds,ax</span><br><span class="line">    </span><br><span class="line">    mov ax,b</span><br><span class="line">    mov ss,ax</span><br><span class="line">    mov sp,16</span><br><span class="line"></span><br><span class="line">    mov bx,0</span><br><span class="line">    mov cx,8</span><br><span class="line">s:  push ds:[bx]</span><br><span class="line">    add bx,2</span><br><span class="line">    loop s</span><br><span class="line">    </span><br><span class="line">    mov ax,4c00h</span><br><span class="line">    int 21h</span><br></pre></td></tr></table></figure>
 
 code ends
-end start
-</code></pre>
+end start</code></pre>
       
     </div>
     
@@ -500,7 +498,7 @@ end start
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
