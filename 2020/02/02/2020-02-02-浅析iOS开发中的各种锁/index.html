@@ -96,14 +96,14 @@
 
 <meta name="description" content="OSSpinLock 自旋锁 ( heigh-leve Lock、自旋锁)使用需导入头文件 #import &amp;lt;libkern/OSAtomic.h&amp;gt;使用方式 OSSpinLock _lock = OS_SPINLOCK_INIT; // 初始化一个锁 OSSpinLockLock(&amp;amp;_lock);  // 上锁 OSSpinLockUnlock(&amp;amp;_lock);  //">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2020-02-02-浅析iOS开发中的各种锁">
+<meta property="og:title" content="浅析iOS开发中的各种锁">
 <meta property="og:url" content="https://dylandu123.github.io/2020/02/02/2020-02-02-浅析iOS开发中的各种锁/index.html">
 <meta property="og:site_name" content="勤能补拙">
 <meta property="og:description" content="OSSpinLock 自旋锁 ( heigh-leve Lock、自旋锁)使用需导入头文件 #import &amp;lt;libkern/OSAtomic.h&amp;gt;使用方式 OSSpinLock _lock = OS_SPINLOCK_INIT; // 初始化一个锁 OSSpinLockLock(&amp;amp;_lock);  // 上锁 OSSpinLockUnlock(&amp;amp;_lock);  //">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-02T10:32:11.128Z">
+<meta property="og:updated_time" content="2020-02-02T12:31:12.914Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2020-02-02-浅析iOS开发中的各种锁">
+<meta name="twitter:title" content="浅析iOS开发中的各种锁">
 <meta name="twitter:description" content="OSSpinLock 自旋锁 ( heigh-leve Lock、自旋锁)使用需导入头文件 #import &amp;lt;libkern/OSAtomic.h&amp;gt;使用方式 OSSpinLock _lock = OS_SPINLOCK_INIT; // 初始化一个锁 OSSpinLockLock(&amp;amp;_lock);  // 上锁 OSSpinLockUnlock(&amp;amp;_lock);  //">
 
 
@@ -139,7 +139,7 @@
 
 
 
-  <title>2020-02-02-浅析iOS开发中的各种锁 | 勤能补拙</title>
+  <title>浅析iOS开发中的各种锁 | 勤能补拙</title>
   
 
 
@@ -279,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">2020-02-02-浅析iOS开发中的各种锁</h1>
+          <h1 class="post-title" itemprop="name headline">浅析iOS开发中的各种锁</h1>
         
 
         <div class="post-meta">
@@ -381,7 +381,7 @@ pthread_cond_init(&amp;cond, NULL);
 pthread_cond_wait(&amp;cond, &amp;mutex);
 
 // 发送信号 继续进行 pthread_cond_wait 后续逻辑
-pthread_cond_signal(&amp;cond);</code></pre><h1 id="NSLock-amp-NSRecursiveLock-amp-NSCondition-amp-NSConditionLock"><a href="#NSLock-amp-NSRecursiveLock-amp-NSCondition-amp-NSConditionLock" class="headerlink" title="NSLock &amp; NSRecursiveLock &amp; NSCondition &amp; NSConditionLock"></a>NSLock &amp; NSRecursiveLock &amp; NSCondition &amp; NSConditionLock</h1><p>可以查看源码 <a href="https://github.com/apple/swift-corelibs-foundation/blob/master/Foundation/NSLock.swift" target="_blank" rel="noopener">NSLock.swift</a><br>也可以查看 <code>GNUstep</code> 通过汇编分析出来的代码实现<a href="https://github.com/gnustep/libs-base/blob/master/Source/NSLock.m" target="_blank" rel="noopener">链接地址</a><br>发现其内部封装的 <code>ptheard_mutex</code> 本初就不做多介绍了。</p>
+pthread_cond_signal(&amp;cond);</code></pre><h1 id="NSLock-amp-NSRecursiveLock-amp-NSCondition-amp-NSConditionLock"><a href="#NSLock-amp-NSRecursiveLock-amp-NSCondition-amp-NSConditionLock" class="headerlink" title="NSLock &amp; NSRecursiveLock &amp; NSCondition &amp; NSConditionLock"></a>NSLock &amp; NSRecursiveLock &amp; NSCondition &amp; NSConditionLock</h1><p>可以查看源码 <a href="https://github.com/apple/swift-corelibs-foundation/blob/master/Foundation/NSLock.swift" target="_blank" rel="noopener">NSLock.swift</a><br>也可以查看 <code>GNUstep</code> 通过汇编分析出来的代码实现。<a href="https://github.com/gnustep/libs-base/blob/master/Source/NSLock.m" target="_blank" rel="noopener">链接地址</a><br>发现其内部封装的 <code>ptheard_mutex</code> 本初就不做多介绍了。</p>
 <h1 id="Dispatch-semaphore"><a href="#Dispatch-semaphore" class="headerlink" title="Dispatch_semaphore"></a>Dispatch_semaphore</h1><p>Dispatch_semaphore 可以控制线程的个数 当控制线程个数为1的时候 能确保同时只有1条线程去访问，已达到确保线程安全的目的</p>
 <p>使用方式</p>
 <pre><code>// 设置最大控制线程数量 number
