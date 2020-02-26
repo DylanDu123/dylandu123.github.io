@@ -102,12 +102,12 @@
 <meta property="og:site_name" content="勤能补拙">
 <meta property="og:description" content="参考文章《概率论与数理统计》浙大版（第四版）教材百度百科  基本概念条件概率条件概率是指事件A在另外一个事件B已经发生条件下的发生概率。条件概率表示为：P（A|B），读作“在B的条件下A的概率”。条件概率可以用决策树进行计算。若只有两个事件A，B，那么$$P(A|B)=\frac{P(A|B)}{P(B)}$$ 概率测度如果事件 B 的概率 P(B) &amp;gt; 0那么 Q(A) = P(A |">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://dylandu123.github.io/2019/07/05/2019-07-05-条件概率公式/2019-07-05-%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87%E5%85%AC%E5%BC%8F/1.png">
-<meta property="og:updated_time" content="2019-11-30T05:59:33.210Z">
+<meta property="og:image" content="https://dylandu123.github.io/2019/07/05/2019-07-05-条件概率公式/1.png">
+<meta property="og:updated_time" content="2020-02-26T14:08:36.057Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="条件概率公式">
 <meta name="twitter:description" content="参考文章《概率论与数理统计》浙大版（第四版）教材百度百科  基本概念条件概率条件概率是指事件A在另外一个事件B已经发生条件下的发生概率。条件概率表示为：P（A|B），读作“在B的条件下A的概率”。条件概率可以用决策树进行计算。若只有两个事件A，B，那么$$P(A|B)=\frac{P(A|B)}{P(B)}$$ 概率测度如果事件 B 的概率 P(B) &amp;gt; 0那么 Q(A) = P(A |">
-<meta name="twitter:image" content="https://dylandu123.github.io/2019/07/05/2019-07-05-条件概率公式/2019-07-05-%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87%E5%85%AC%E5%BC%8F/1.png">
+<meta name="twitter:image" content="https://dylandu123.github.io/2019/07/05/2019-07-05-条件概率公式/1.png">
 
 
 
@@ -372,7 +372,11 @@
 <h2 id="例题四"><a href="#例题四" class="headerlink" title="例题四"></a>例题四</h2><p>一小学举办家长开放日，欢迎家长参加活动，小明的母亲参加的概率为80%，若母亲参加，则父亲参加的概率为30%，若母亲不参加，则父亲参加的概率为90%。<br>（1）求父母都参加的概率<br>（2）求父母参加的概率<br>（3）在已知父亲参加的条件下，求母亲参加的概率</p>
 <p>解：<br>设<br>\(A=\begin{Bmatrix}母亲参加\end{Bmatrix}\)<br>\(B=\begin{Bmatrix}父亲参加\end{Bmatrix}\)<br>\(P(A) = 0.8\)<br>\(P(B|A)=0.3\)<br>\(P(B|\overline{A}) = 0.9\)<br>\(P(B|A)= \frac{P(AB)}{P(A)} = 0.3 =&gt; P(AB)=0.24\)<br>\(P(B)= P(A)P(B|A) + P(\overline{A})P(B|\overline{A}) = 0.8 \times 0.3 + 0.2 \times 0.9 = 0.42  \)<br>\(P(A|B)= \frac{P(AB)}{P(B)} = \frac{4}{7} \)</p>
 <h2 id="例题五"><a href="#例题五" class="headerlink" title="例题五"></a>例题五</h2><p>有甲乙两盒，甲盒有三个红球两个白球，乙盒有两个红球，一个白球。先从甲盒中采用不放回抽样取3球放入到乙盒，再从乙盒中取一个球，球取到的是红球的概率。<br>解：<br>设<br>\(A=\begin{Bmatrix}甲盒中取球\end{Bmatrix}\)<br>\(B=\begin{Bmatrix}乙盒中去球\end{Bmatrix}\)<br>\(<br>P(B)=P(B|A_1) \times P(A_1) + P(B|A_2) \times P(A_2) + P(B|A_3) \times P(A_3) =   \\<br>\frac{1}{2} \times \frac{C_{3}^{1}C_{2}^{2}}{C_{5}^{3}} + \frac{2}{3} \times \frac{C_{3}^{2}C_{2}^{1}}{C_{5}^{3}} + \frac{5}{6} \times \frac{C_{3}^{3}}{C_{5}^{3}} = \frac{19}{30} \\<br>\)</p>
-<h2 id="例题六"><a href="#例题六" class="headerlink" title="例题六"></a>例题六</h2><p>根据以往的临床记录某种诊断癌症的试验具有5%的假阳性以及%3的假阴性<br>若设<br> <code>A={试验反应是阳性}</code> <code>C={被诊断患有癌症}</code><br>则有<br>\(P(A| \overline{C}) = 5% \)<br>\(P(\overline{A}|C) = 3% \)<br>已知某一群体<code>P(C) = 0.005</code>,问这种方法能否用于普查。<br><img src="/2019/07/05/2019-07-05-条件概率公式/2019-07-05-%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87%E5%85%AC%E5%BC%8F/1.png" alt="图片"><br>\(<br>P(C|A) = \frac{P(CA)}{P(A)} = \frac{P(CA)}{P(A|C)P(C) + P(A|\overline{C})P(\overline{C})} = 0.08882783882783883<br>\)</p>
+<h2 id="例题六"><a href="#例题六" class="headerlink" title="例题六"></a>例题六</h2><p>根据以往的临床记录某种诊断癌症的试验具有5%的假阳性以及%3的假阴性<br>若设<br> <code>A={试验反应是阳性}</code> <code>C={被诊断患有癌症}</code><br>则有</p>
+<p>\(P(A| \overline{C}) = 5% \)<br>\(P(\overline{A}|C) = 3% \)</p>
+<p>已知某一群体<code>P(C) = 0.005</code>,问这种方法能否用于普查。</p>
+<p><img src="/2019/07/05/2019-07-05-条件概率公式/1.png" alt="图片"></p>
+<p>\(<br>P(C|A) = \frac{P(CA)}{P(A)} = \frac{P(CA)}{P(A|C)P(C) + P(A|\overline{C})P(\overline{C})} = 0.08882783882783883<br>\)</p>
 
       
     </div>
@@ -490,7 +494,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

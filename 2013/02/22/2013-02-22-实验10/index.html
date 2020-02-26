@@ -102,12 +102,12 @@
 <meta property="og:site_name" content="勤能补拙">
 <meta property="og:description" content="1 显示字符串问题显示字符串是现实工作中经常要用到的功能，应该编写一个通用的子程序来实现这个功能。我们应该提供灵活的调用接口，使调用者可以界定现实的位置（行、列）、内容和颜色。 子程序描述名称：show_str功能：在指定的位置，用指定的颜色，显示一个用0结束的字符串。参数：(dh)=行号(取值范围0～24)，(dl)=列号(取值范围0～79)，          (cl)=颜色，ds:si指向字">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://dylandu123.github.io/2013/02/22/2013-02-22-实验10/2013-02-22-%E5%AE%9E%E9%AA%8C10/Jietu20190622-172647.jpg">
-<meta property="og:updated_time" content="2019-07-25T12:47:20.967Z">
+<meta property="og:image" content="https://dylandu123.github.io/2013/02/22/2013-02-22-实验10/Jietu20190622-172647.jpg">
+<meta property="og:updated_time" content="2020-02-26T14:04:08.266Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实验10">
 <meta name="twitter:description" content="1 显示字符串问题显示字符串是现实工作中经常要用到的功能，应该编写一个通用的子程序来实现这个功能。我们应该提供灵活的调用接口，使调用者可以界定现实的位置（行、列）、内容和颜色。 子程序描述名称：show_str功能：在指定的位置，用指定的颜色，显示一个用0结束的字符串。参数：(dh)=行号(取值范围0～24)，(dl)=列号(取值范围0～79)，          (cl)=颜色，ds:si指向字">
-<meta name="twitter:image" content="https://dylandu123.github.io/2013/02/22/2013-02-22-实验10/2013-02-22-%E5%AE%9E%E9%AA%8C10/Jietu20190622-172647.jpg">
+<meta name="twitter:image" content="https://dylandu123.github.io/2013/02/22/2013-02-22-实验10/Jietu20190622-172647.jpg">
 
 
 
@@ -441,7 +441,7 @@ divdw:
     mov dx,si
     ret
 code ends
-end start</code></pre><h2 id="3-数值显示"><a href="#3-数值显示" class="headerlink" title="3 数值显示"></a>3 数值显示</h2><h4 id="子程序描述-2"><a href="#子程序描述-2" class="headerlink" title="子程序描述"></a>子程序描述</h4><p>名称：dtoc<br>功能：将word型数据转变为表示十进制数的字符串，字符串以10为结尾符。<br>参数：(ax)=word型数据,ds:si指向字符串首地址<br>返回：无<br>应用举例：编程，将数据12666以十进制的形式在屏幕的8行3列，用绿色显示出来。在显示时我们调用本次实验中的第一个子程序show_str.<br>提示<br>0<del>9的ASCII码为30H</del>39H，则先由十六进制转化为十进制，再转ACSII码，转换示意图如下：<br><img src="/2013/02/22/2013-02-22-实验10/2013-02-22-%E5%AE%9E%E9%AA%8C10/Jietu20190622-172647.jpg" alt="图片3.6"><br>同时要注意，依次得到的是个位，十位，百位……万位这与我们习惯的从左到右的万位……个位顺序颠倒</p>
+end start</code></pre><h2 id="3-数值显示"><a href="#3-数值显示" class="headerlink" title="3 数值显示"></a>3 数值显示</h2><h4 id="子程序描述-2"><a href="#子程序描述-2" class="headerlink" title="子程序描述"></a>子程序描述</h4><p>名称：dtoc<br>功能：将word型数据转变为表示十进制数的字符串，字符串以10为结尾符。<br>参数：(ax)=word型数据,ds:si指向字符串首地址<br>返回：无<br>应用举例：编程，将数据12666以十进制的形式在屏幕的8行3列，用绿色显示出来。在显示时我们调用本次实验中的第一个子程序show_str.<br>提示<br>0<del>9的ASCII码为30H</del>39H，则先由十六进制转化为十进制，再转ACSII码，转换示意图如下：<br><img src="/2013/02/22/2013-02-22-实验10/Jietu20190622-172647.jpg" alt="图片3.6"><br>同时要注意，依次得到的是个位，十位，百位……万位这与我们习惯的从左到右的万位……个位顺序颠倒</p>
 <pre><code>assume cs:code
     data segment
         db 10 dup (0)
@@ -618,7 +618,7 @@ end start</code></pre><h2 id="3-数值显示"><a href="#3-数值显示" class="h
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

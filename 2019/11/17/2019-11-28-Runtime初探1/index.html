@@ -102,12 +102,12 @@
 <meta property="og:site_name" content="勤能补拙">
 <meta property="og:description" content="什么是 Runtime苹果对 Runtime 的解释：  The Objective-C runtime is a runtime library that provides support for the dynamic properties of the Objective-C language, and as such is linked to by all Objective-C apps">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://dylandu123.github.io/2019/11/17/2019-11-28-Runtime初探1/2019-11-28-Runtime%E5%88%9D%E6%8E%A21/1.png">
-<meta property="og:updated_time" content="2020-01-13T12:44:32.144Z">
+<meta property="og:image" content="https://dylandu123.github.io/2019/11/17/2019-11-28-Runtime初探1/1.png">
+<meta property="og:updated_time" content="2020-02-26T14:10:12.708Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Runtime初探(一)">
 <meta name="twitter:description" content="什么是 Runtime苹果对 Runtime 的解释：  The Objective-C runtime is a runtime library that provides support for the dynamic properties of the Objective-C language, and as such is linked to by all Objective-C apps">
-<meta name="twitter:image" content="https://dylandu123.github.io/2019/11/17/2019-11-28-Runtime初探1/2019-11-28-Runtime%E5%88%9D%E6%8E%A21/1.png">
+<meta name="twitter:image" content="https://dylandu123.github.io/2019/11/17/2019-11-28-Runtime初探1/1.png">
 
 
 
@@ -368,7 +368,7 @@
 <p>可以得出<code>NSObject</code>内部保存了一个类型为<code>objc_class</code>的结构体指针。接下来去<code>runtime</code>源码中寻找<code>objc_class</code>的定义。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">struct objc_object &#123;</span><br><span class="line">    Class _Nonnull isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct objc_class : objc_object &#123;</span><br><span class="line">    // Class ISA;</span><br><span class="line">    Class superclass;</span><br><span class="line">    cache_t cache;             // formerly cache pointer and vtable</span><br><span class="line">    class_data_bits_t bits;    // class_rw_t * plus custom rr/alloc flags</span><br><span class="line"></span><br><span class="line">    class_rw_t *data() &#123; </span><br><span class="line">        return bits.data();</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">    ......</span><br></pre></td></tr></table></figure>
 
-<p>可以看到有<code>isa</code>和<code>superclass</code>这两个成员变量。那么<code>isa</code>和<code>superclass</code>是做什么的呢。上经典图。<br><img src="/2019/11/17/2019-11-28-Runtime初探1/2019-11-28-Runtime%E5%88%9D%E6%8E%A21/1.png" alt="图片"></p>
+<p>可以看到有<code>isa</code>和<code>superclass</code>这两个成员变量。那么<code>isa</code>和<code>superclass</code>是做什么的呢。上经典图。<br><img src="/2019/11/17/2019-11-28-Runtime初探1/1.png" alt="图片"></p>
 <p>首先需要了解<code>instance</code>、<code>class</code>、<code>meta-class</code>他们之间的关系。需要先知道这些。<br>1.<code>instance</code>是<code>class</code>的具象化，内部只保存值。<br>2.<code>class</code>保存着所有<code>instance</code>的描述，例如：成员变量的类型和函数地址等。<br>2.<code>meta-class</code>保存着所有<code>class</code>的描述，例如：函数地址。</p>
 <p>所以<code>isa</code>和<code>superclass</code>的存在就是为了完成面向对象的继承思想，那么接下来调用方法的过程就很好解释了。</p>
 <pre><code>1.如果是一个`instance`调用了函数
@@ -539,7 +539,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
