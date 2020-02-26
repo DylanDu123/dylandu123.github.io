@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="勤能补拙">
 <meta property="og:description" content="OSSpinLock 自旋锁 ( heigh-leve Lock、自旋锁)使用需导入头文件 #import &amp;lt;libkern/OSAtomic.h&amp;gt;使用方式 OSSpinLock _lock = OS_SPINLOCK_INIT; // 初始化一个锁 OSSpinLockLock(&amp;amp;_lock);  // 上锁 OSSpinLockUnlock(&amp;amp;_lock);  //">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-02T12:31:12.914Z">
+<meta property="og:updated_time" content="2020-02-02T13:37:40.222Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析iOS开发中的各种锁">
 <meta name="twitter:description" content="OSSpinLock 自旋锁 ( heigh-leve Lock、自旋锁)使用需导入头文件 #import &amp;lt;libkern/OSAtomic.h&amp;gt;使用方式 OSSpinLock _lock = OS_SPINLOCK_INIT; // 初始化一个锁 OSSpinLockLock(&amp;amp;_lock);  // 上锁 OSSpinLockUnlock(&amp;amp;_lock);  //">
@@ -396,7 +396,60 @@ dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 // 信号量+1
 dispatch_semaphore_signal(semaphore);</code></pre><h1 id="dispatch-queue-DISPATCH-QUEUE-SERIAL"><a href="#dispatch-queue-DISPATCH-QUEUE-SERIAL" class="headerlink" title="dispatch_queue(DISPATCH_QUEUE_SERIAL)"></a>dispatch_queue(DISPATCH_QUEUE_SERIAL)</h1><p>串行队列,当在一个串行队列执行的时候，只有一个线程，能确保线程安全</p>
 <h1 id="synchronized"><a href="#synchronized" class="headerlink" title="@synchronized"></a>@synchronized</h1><p>本质上也是对<code>ptheard_mutex</code>的封装.可以去runtime源码中<code>objc-sync.mm</code>文件查看。</p>
+<h1 id="Atomic"><a href="#Atomic" class="headerlink" title="Atomic"></a>Atomic</h1><p>如果成员变量声明成为<code>atomic</code>的话。会在<code>set</code>和<code>get</code>方法中添加锁。<br>源码可以查看runtime中的<code>objc-accessors.mm</code>文件</p>
+<p>get 函数</p>
+<pre><code>id objc_getProperty(id self, SEL _cmd, ptrdiff_t offset, BOOL atomic) {
+    if (offset == 0) {
+        return object_getClass(self);
+    }
 
+    // Retain release world
+    id *slot = (id*) ((char*)self + offset);
+    // 如果不加锁 直接返回值
+    if (!atomic) return *slot; 
+
+    // 内部封装的 os_unfair_lock 锁
+    // Atomic retain release world
+    spinlock_t&amp; slotlock = PropertyLocks[slot];
+    slotlock.lock();
+    id value = objc_retain(*slot);
+    slotlock.unlock();
+
+    // for performance, we (safely) issue the autorelease OUTSIDE of the spinlock.
+    return objc_autoreleaseReturnValue(value);
+}</code></pre><p>set 函数</p>
+<pre><code>static inline void reallySetProperty(id self, SEL _cmd, id newValue, ptrdiff_t offset, bool atomic, bool copy, bool mutableCopy)
+{
+    if (offset == 0) {
+        object_setClass(self, newValue);
+        return;
+    }
+
+    id oldValue;
+    id *slot = (id*) ((char*)self + offset);
+
+    if (copy) {
+        newValue = [newValue copyWithZone:nil];
+    } else if (mutableCopy) {
+        newValue = [newValue mutableCopyWithZone:nil];
+    } else {
+        if (*slot == newValue) return;
+        newValue = objc_retain(newValue);
+    }
+
+    if (!atomic) {
+        oldValue = *slot;
+        *slot = newValue;
+    } else {
+        spinlock_t&amp; slotlock = PropertyLocks[slot];
+        slotlock.lock();
+        oldValue = *slot;
+        *slot = newValue;        
+        slotlock.unlock();
+    }
+
+    objc_release(oldValue);
+}</code></pre>
       
     </div>
     
@@ -429,6 +482,10 @@ dispatch_semaphore_signal(semaphore);</code></pre><h1 id="dispatch-queue-DISPATC
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/11/2020-02-11-Tagged-Pointer/" rel="prev" title="Tagged Pointer 源码解析">
+                Tagged Pointer 源码解析 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -503,7 +560,7 @@ dispatch_semaphore_signal(semaphore);</code></pre><h1 id="dispatch-queue-DISPATC
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -560,7 +617,7 @@ dispatch_semaphore_signal(semaphore);</code></pre><h1 id="dispatch-queue-DISPATC
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OSSpinLock-自旋锁-heigh-leve-Lock、自旋锁"><span class="nav-number">1.</span> <span class="nav-text">OSSpinLock 自旋锁 ( heigh-leve Lock、自旋锁)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#os-unfair-lock-low-level-Lock、互斥锁"><span class="nav-number">2.</span> <span class="nav-text">os_unfair_lock (low-level Lock、互斥锁 )</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ptheard-mutex"><span class="nav-number">3.</span> <span class="nav-text">ptheard_mutex</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NSLock-amp-NSRecursiveLock-amp-NSCondition-amp-NSConditionLock"><span class="nav-number">4.</span> <span class="nav-text">NSLock &amp; NSRecursiveLock &amp; NSCondition &amp; NSConditionLock</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dispatch-semaphore"><span class="nav-number">5.</span> <span class="nav-text">Dispatch_semaphore</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dispatch-queue-DISPATCH-QUEUE-SERIAL"><span class="nav-number">6.</span> <span class="nav-text">dispatch_queue(DISPATCH_QUEUE_SERIAL)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#synchronized"><span class="nav-number">7.</span> <span class="nav-text">@synchronized</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OSSpinLock-自旋锁-heigh-leve-Lock、自旋锁"><span class="nav-number">1.</span> <span class="nav-text">OSSpinLock 自旋锁 ( heigh-leve Lock、自旋锁)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#os-unfair-lock-low-level-Lock、互斥锁"><span class="nav-number">2.</span> <span class="nav-text">os_unfair_lock (low-level Lock、互斥锁 )</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ptheard-mutex"><span class="nav-number">3.</span> <span class="nav-text">ptheard_mutex</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NSLock-amp-NSRecursiveLock-amp-NSCondition-amp-NSConditionLock"><span class="nav-number">4.</span> <span class="nav-text">NSLock &amp; NSRecursiveLock &amp; NSCondition &amp; NSConditionLock</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dispatch-semaphore"><span class="nav-number">5.</span> <span class="nav-text">Dispatch_semaphore</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dispatch-queue-DISPATCH-QUEUE-SERIAL"><span class="nav-number">6.</span> <span class="nav-text">dispatch_queue(DISPATCH_QUEUE_SERIAL)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#synchronized"><span class="nav-number">7.</span> <span class="nav-text">@synchronized</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Atomic"><span class="nav-number">8.</span> <span class="nav-text">Atomic</span></a></li></ol></div>
             
 
           </div>
