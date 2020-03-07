@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="iOS, Runtime,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="class_copyIvarList &amp;amp; class_copyPropertyList区别要想清楚这个问题，首先要知道@property做了什么事情。在对象中增加一个成员变量有两种方式 @interface ViewController () {     NSString *_ivar1;     NSString *_ivar2; } @property (nonatomic, copy">
+<meta name="keywords" content="iOS, Runtime">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Runtime补充">
+<meta property="og:url" content="https://dylandu123.github.io/2020/03/06/2020-03-06-Runtime补充/index.html">
+<meta property="og:site_name" content="勤能补拙">
+<meta property="og:description" content="class_copyIvarList &amp;amp; class_copyPropertyList区别要想清楚这个问题，首先要知道@property做了什么事情。在对象中增加一个成员变量有两种方式 @interface ViewController () {     NSString *_ivar1;     NSString *_ivar2; } @property (nonatomic, copy">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-07T13:55:03.089Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Runtime补充">
+<meta name="twitter:description" content="class_copyIvarList &amp;amp; class_copyPropertyList区别要想清楚这个问题，首先要知道@property做了什么事情。在对象中增加一个成员变量有两种方式 @interface ViewController () {     NSString *_ivar1;     NSString *_ivar2; } @property (nonatomic, copy">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dylandu123.github.io/2020/03/06/2020-03-06-Runtime补充/">
+
+
+
+
+
+  <title>Runtime补充 | 勤能补拙</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">勤能补拙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">这是一个简单的小博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://dylandu123.github.io/2020/03/06/2020-03-06-Runtime补充/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dylan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="勤能补拙">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Runtime补充</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-06T19:55:07+08:00">
+                2020-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/移动端/" itemprop="url" rel="index">
+                    <span itemprop="name">移动端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="class-copyIvarList-amp-class-copyPropertyList区别"><a href="#class-copyIvarList-amp-class-copyPropertyList区别" class="headerlink" title="class_copyIvarList &amp; class_copyPropertyList区别"></a>class_copyIvarList &amp; class_copyPropertyList区别</h1><p>要想清楚这个问题，首先要知道<code>@property</code>做了什么事情。在对象中增加一个成员变量有两种方式</p>
+<pre><code>@interface ViewController ()
+{
+    NSString *_ivar1;
+    NSString *_ivar2;
+}
+@property (nonatomic, copy) NSString *ivar3;
+@end</code></pre><p>其中的区别是通过<code>@property</code>修饰的成员变量，编译器在编译时会主动添加<code>set</code>和<code>get</code>方法。同时会生成一个名为<code>_ivar3</code>的实例变量。通过<code>clang</code>来将上面的代码编译成为<code>cpp</code>文件来验证下。</p>
+<pre><code>static struct _class_ro_t _OBJC_CLASS_RO_$_ViewController __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = {
+    0, __OFFSETOFIVAR__(struct ViewController, _ivar1), sizeof(struct ViewController_IMPL), 
+    (unsigned int)0, 
+    0, 
+    &quot;ViewController&quot;,
+    (const struct _method_list_t *)&amp;_OBJC_$_INSTANCE_METHODS_ViewController,
+    0, 
+    (const struct _ivar_list_t *)&amp;_OBJC_$_INSTANCE_VARIABLES_ViewController,
+    0, 
+    0, 
+};
+
+_OBJC_$_INSTANCE_METHODS_ViewController __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = {
+    sizeof(_objc_method),
+    3,
+    {{(struct objc_selector *)"viewDidLoad", "v16@0:8", (void *)_I_ViewController_viewDidLoad},
+        {(struct objc_selector *)"ivar3", "@16@0:8", (void *)_I_ViewController_ivar3},
+        {(struct objc_selector *)"setIvar3:", "v24@0:8@16", (void *)_I_ViewController_setIvar3_}}
+};
+
+_OBJC_$_INSTANCE_VARIABLES_ViewController __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = {
+    sizeof(_ivar_t),
+    3,
+    {{(unsigned long int *)&OBJC_IVAR_$_ViewController$_ivar1, "_ivar1", "@\"NSString\"", 3, 8},
+        {(unsigned long int *)&OBJC_IVAR_$_ViewController$_ivar2, "_ivar2", "@\"NSString\"", 3, 8},
+        {(unsigned long int *)&OBJC_IVAR_$_ViewController$_ivar3, "_ivar3", "@\"NSString\"", 3, 8}}
+};</code></pre><p>可以看出生成的<code>var_list</code>有<code>_ivar1</code> <code>_ivar2</code> <code>_ivar3</code>,证明通过<code>@property</code>修饰的成员变量编译器会协助生成<code>ivar</code>,同时能看出有生成<code>ivar3</code>和<code>setIvar3</code>函数,能够证明通过<code>@property</code>修饰的成员变量编译器会帮助生成<code>set</code>和<code>get</code>方法。</p>
+<p>接下来看下 <code>class_copyIvarList</code>和<code>objc_property_t</code> 的源码，</p>
+<pre><code>Ivar *
+class_copyIvarList(Class cls, unsigned int *outCount)
+{
+    const ivar_list_t *ivars;
+    Ivar *result = nil;
+    unsigned int count = 0;
+
+    if (!cls) {
+        if (outCount) *outCount = 0;
+        return nil;
+    }
+
+    mutex_locker_t lock(runtimeLock);
+
+    assert(cls-&gt;isRealized());
+    // 这里可以看到 ivars 是从 read only 数据段中取出的
+    if ((ivars = cls-&gt;data()-&gt;ro-&gt;ivars)  &amp;&amp;  ivars-&gt;count) {
+        result = (Ivar *)malloc((ivars-&gt;count+1) * sizeof(Ivar));
+
+        for (auto&amp; ivar : *ivars) {
+            if (!ivar.offset) continue;  // anonymous bitfield
+            result[count++] = &amp;ivar;
+        }
+        result[count] = nil;
+    }
+
+    if (outCount) *outCount = count;
+    return result;
+}
+
+objc_property_t *
+class_copyPropertyList(Class cls, unsigned int *outCount)
+{
+    if (!cls) {
+        if (outCount) *outCount = 0;
+        return nil;
+    }
+
+    mutex_locker_t lock(runtimeLock);
+
+    checkIsKnownClass(cls);
+    assert(cls-&gt;isRealized());
+
+    auto rw = cls-&gt;data();
+
+    property_t **result = nil;
+    unsigned int count = rw-&gt;properties.count();
+    if (count &gt; 0) {
+        result = (property_t **)malloc((count + 1) * sizeof(property_t *));
+
+        count = 0;
+        for (auto&amp; prop : rw-&gt;properties) {
+            result[count++] = &amp;prop;
+        }
+        result[count] = nil;
+    }
+
+    if (outCount) *outCount = count;
+    return (objc_property_t *)result;
+}</code></pre><p>可以看出<code>ivars</code>是通过<code>cls-&gt;data()-&gt;ro-&gt;ivars</code>得到的，而<code>ro</code>的意思是 <code>read only</code>。而<code>property_t</code>是通过<code>cls-&gt;data()-&gt;rw-&gt;properties</code>来获取的，他们的区别是<code>ivars</code>是一个只读的数据，在类被创建完成之后就不允许再更改，获取的是全部的实例成员变量。而<code>properties</code>是一个可读可写的数据，获取的只是通过<code>@property</code>修饰的成员变量，而在分类中<code>@property</code>修饰的成员变量并不会真正的生成<code>ivar</code>。</p>
+<h1 id="class-rw-t-和-class-ro-t-的区别"><a href="#class-rw-t-和-class-ro-t-的区别" class="headerlink" title="class_rw_t 和 class_ro_t 的区别"></a>class_rw_t 和 class_ro_t 的区别</h1><p><code>class_ro_t</code>的数据是编译期就确定的。<code>class_rw_t</code>是运行期间确定的。</p>
+<h1 id="category如何被加载的"><a href="#category如何被加载的" class="headerlink" title="category如何被加载的"></a>category如何被加载的</h1><p>通过<code>runtime</code>入口函数<code>_objc_init</code>查看，运行过程是<code>map_images-&gt;_read_images</code>,而在<code>_read_images</code>函数中有以下代码，通过代码可以看出加载<code>category</code>时只添加了<code>instanceMethods</code> <code>protocols</code> <code>instanceProperties</code>和 <code>classMethods</code> <code>_classProperties</code></p>
+<pre><code>// Discover categories. 
+for (EACH_HEADER) {
+    category_t **catlist = 
+        _getObjc2CategoryList(hi, &amp;count);
+    bool hasClassProperties = hi-&gt;info()-&gt;hasCategoryClassProperties();
+
+    for (i = 0; i &lt; count; i++) {
+        category_t *cat = catlist[i];
+        Class cls = remapClass(cat-&gt;cls);
+
+        if (!cls) {
+            // Category&apos;s target class is missing (probably weak-linked).
+            // Disavow any knowledge of this category.
+            catlist[i] = nil;
+            if (PrintConnecting) {
+                _objc_inform(&quot;CLASS: IGNORING category \?\?\?(%s) %p with &quot;
+                             &quot;missing weak-linked target class&quot;, 
+                             cat-&gt;name, cat);
+            }
+            continue;
+        }
+
+        // Process this category. 
+        // First, register the category with its target class. 
+        // Then, rebuild the class&apos;s method lists (etc) if 
+        // the class is realized. 
+        bool classExists = NO;
+        if (cat-&gt;instanceMethods ||  cat-&gt;protocols  
+            ||  cat-&gt;instanceProperties) 
+        {
+             addUnattachedCategoryForClass(cat, cls, hi);
+            if (cls-&gt;isRealized()) {
+                remethodizeClass(cls);
+                classExists = YES;
+            }
+            if (PrintConnecting) {
+                _objc_inform(&quot;CLASS: found category -%s(%s) %s&quot;, 
+                             cls-&gt;nameForLogging(), cat-&gt;name, 
+                             classExists ? &quot;on existing class&quot; : &quot;&quot;);
+            }
+        }
+
+        if (cat-&gt;classMethods  ||  cat-&gt;protocols  
+            ||  (hasClassProperties &amp;&amp; cat-&gt;_classProperties)) 
+        {
+            addUnattachedCategoryForClass(cat, cls-&gt;ISA(), hi);
+            if (cls-&gt;ISA()-&gt;isRealized()) {
+                remethodizeClass(cls-&gt;ISA());
+            }
+            if (PrintConnecting) {
+                _objc_inform(&quot;CLASS: found category +%s(%s)&quot;, 
+                             cls-&gt;nameForLogging(), cat-&gt;name);
+            }
+        }
+    }
+}</code></pre><h2 id="两个category的同名方法的加载顺序"><a href="#两个category的同名方法的加载顺序" class="headerlink" title="两个category的同名方法的加载顺序"></a>两个category的同名方法的加载顺序</h2><p>通过上面的代码了解到，分类函数添加到类里面的实现的第一步是<code>addUnattachedCategoryForClass</code>函数。通过查看源码实现可以看到是将所有的分类都顺序的添加到一个已<code>class</code>为<code>key</code>的全局的<code>NXMapTable</code>中。</p>
+<pre><code>static void addUnattachedCategoryForClass(category_t *cat, Class cls, 
+                                        header_info *catHeader)
+{
+    runtimeLock.assertLocked();
+
+    // DO NOT use cat-&gt;cls! cls may be cat-&gt;cls-&gt;isa instead
+    NXMapTable *cats = unattachedCategories();
+    category_list *list;
+
+    list = (category_list *)NXMapGet(cats, cls);
+    if (!list) {
+        list = (category_list *)
+            calloc(          (*list) + sizeof(list-&gt;list[0]), 1);
+    } else {
+        list = (category_list *)
+            realloc(list, sizeof(*list) + sizeof(list-&gt;list[0]) * (list-&gt;count + 1));
+    }
+    list-&gt;list[list-&gt;count++] = (locstamped_category_t){cat, catHeader};
+    NXMapInsert(cats, cls, list);
+}</code></pre><p>第二步是<code>remethodizeClass</code>，而它调用了<code>attachCategories</code>函数。</p>
+<pre><code>static void remethodizeClass(Class cls)
+{
+    category_list *cats;
+    bool isMeta;
+
+    runtimeLock.assertLocked();
+
+    isMeta = cls-&gt;isMetaClass();
+
+    // Re-methodizing: check for more categories
+    if ((cats = unattachedCategoriesForClass(cls, false/*not realizing*/))) {
+        if (PrintConnecting) {
+            _objc_inform(&quot;CLASS: attaching categories to class &apos;%s&apos; %s&quot;, 
+                        cls-&gt;nameForLogging(), isMeta ? &quot;(meta)&quot; : &quot;&quot;);
+        }
+
+        attachCategories(cls, cats, true /*flush caches*/);        
+        free(cats);
+    }
+}</code></pre><p>通过 <code>attachCategories</code> 的代码查看,逆序的将分类中的<code>method</code> <code>property</code> <code>protocol</code>添加进入<code>cls-&gt;data()-&gt;rw</code>中。</p>
+<pre><code>static void 
+attachCategories(Class cls, category_list *cats, bool flush_caches)
+{
+    if (!cats) return;
+    if (PrintReplacedMethods) printReplacements(cls, cats);
+
+    bool isMeta = cls-&gt;isMetaClass();
+
+    // fixme rearrange to remove these intermediate allocations
+    method_list_t **mlists = (method_list_t **)
+        malloc(cats-&gt;count * sizeof(*mlists));
+    property_list_t **proplists = (property_list_t **)
+        malloc(cats-&gt;count * sizeof(*proplists));
+    protocol_list_t **protolists = (protocol_list_t **)
+        malloc(cats-&gt;count * sizeof(*protolists));
+
+    // Count backwards through cats to get newest categories first
+    int mcount = 0;
+    int propcount = 0;
+    int protocount = 0;
+    int i = cats-&gt;count;
+    bool fromBundle = NO;
+    while (i--) {
+        auto&amp; entry = cats-&gt;list[i];
+
+        method_list_t *mlist = entry.cat-&gt;methodsForMeta(isMeta);
+        if (mlist) {
+            mlists[mcount++] = mlist;
+            fromBundle |= entry.hi-&gt;isBundle();
+        }
+
+        property_list_t *proplist = 
+            entry.cat-&gt;propertiesForMeta(isMeta, entry.hi);
+        if (proplist) {
+            proplists[propcount++] = proplist;
+        }
+
+        protocol_list_t *protolist = entry.cat-&gt;protocols;
+        if (protolist) {
+            protolists[protocount++] = protolist;
+        }
+    }
+
+    auto rw = cls-&gt;data();
+
+    prepareMethodLists(cls, mlists, mcount, NO, fromBundle);
+    rw-&gt;methods.attachLists(mlists, mcount);
+    free(mlists);
+    if (flush_caches  &amp;&amp;  mcount &gt; 0) flushCaches(cls);
+
+    rw-&gt;properties.attachLists(proplists, propcount);
+    free(proplists);
+
+    rw-&gt;protocols.attachLists(protolists, protocount);
+    free(protolists);
+}</code></pre><h2 id="category的load方法的加载顺序"><a href="#category的load方法的加载顺序" class="headerlink" title="category的load方法的加载顺序"></a>category的load方法的加载顺序</h2><p>通过<code>_objc_init-&gt;load_images</code>查看源码会发现主要调用了两个函数<code>prepare_load_methods</code>和<code>call_load_methods</code></p>
+<pre><code>void
+load_images(const char *path __unused, const struct mach_header *mh)
+{
+    // Return without taking locks if there are no +load methods here.
+    if (!hasLoadMethods((const headerType *)mh)) return;
+
+    recursive_mutex_locker_t lock(loadMethodLock);
+
+    // Discover load methods
+    {
+        mutex_locker_t lock2(runtimeLock);
+        prepare_load_methods((const headerType *)mh);
+    }
+
+    // Call +load methods (without runtimeLock - re-entrant)
+    call_load_methods();
+}</code></pre><p>其中<code>prepare_load_methods</code>主要做了以下动作</p>
+<ul>
+<li>获取所有类,将所有类的<code>load</code>函数添加进<code>loadable_classes</code>中。如果有父类优先添加父类的<code>load</code>函数。</li>
+<li>获取所有的未加载的<code>categorylist</code>,此时获取的<code>list</code>的顺序为编译期就已经确定好的顺序。将所有分类实现的<code>load</code>函数添加进<code>loadable_categories</code>中</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">void prepare_load_methods(const headerType *mhdr)</span><br><span class="line">&#123;</span><br><span class="line">    size_t count, i;</span><br><span class="line"></span><br><span class="line">    runtimeLock.assertLocked();</span><br><span class="line"></span><br><span class="line">    classref_t *classlist = </span><br><span class="line">        _getObjc2NonlazyClassList(mhdr, &amp;count);</span><br><span class="line">    for (i = 0; i &lt; count; i++) &#123;</span><br><span class="line">        schedule_class_load(remapClass(classlist[i]));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    category_t **categorylist = _getObjc2NonlazyCategoryList(mhdr, &amp;count);</span><br><span class="line">    for (i = 0; i &lt; count; i++) &#123;</span><br><span class="line">        category_t *cat = categorylist[i];</span><br><span class="line">        Class cls = remapClass(cat-&gt;cls);</span><br><span class="line">        if (!cls) continue;  // category for ignored weak-linked class</span><br><span class="line">        if (cls-&gt;isSwiftStable()) &#123;</span><br><span class="line">            _objc_fatal(&quot;Swift class extensions and categories on Swift &quot;</span><br><span class="line">                        &quot;classes are not allowed to have +load methods&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        realizeClassWithoutSwift(cls);</span><br><span class="line">        assert(cls-&gt;ISA()-&gt;isRealized());</span><br><span class="line">        add_category_to_loadable_list(cat);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>call_load_methods</code>做了哪些事情可以通过注释来解释</p>
+<ul>
+<li>调用所有的类和分类的<code>+load</code>函数</li>
+<li>优先调用父类的</li>
+<li>分类的调用在父类调用之后</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/***********************************************************************</span><br><span class="line">* call_load_methods</span><br><span class="line">* Call all pending class and category +load methods.</span><br><span class="line">* Class +load methods are called superclass-first. </span><br><span class="line">* Category +load methods are not called until after the parent class&apos;s +load.</span><br><span class="line">* </span><br><span class="line">* This method must be RE-ENTRANT, because a +load could trigger </span><br><span class="line">* more image mapping. In addition, the superclass-first ordering </span><br><span class="line">* must be preserved in the face of re-entrant calls. Therefore, </span><br><span class="line">* only the OUTERMOST call of this function will do anything, and </span><br><span class="line">* that call will handle all loadable classes, even those generated </span><br><span class="line">* while it was running.</span><br><span class="line">*</span><br><span class="line">* The sequence below preserves +load ordering in the face of </span><br><span class="line">* image loading during a +load, and make sure that no </span><br><span class="line">* +load method is forgotten because it was added during </span><br><span class="line">* a +load call.</span><br><span class="line">* Sequence:</span><br><span class="line">* 1. Repeatedly call class +loads until there aren&apos;t any more</span><br><span class="line">* 2. Call category +loads ONCE.</span><br><span class="line">* 3. Run more +loads if:</span><br><span class="line">*    (a) there are more classes to load, OR</span><br><span class="line">*    (b) there are some potential category +loads that have </span><br><span class="line">*        still never been attempted.</span><br><span class="line">* Category +loads are only run once to ensure &quot;parent class first&quot; </span><br><span class="line">* ordering, even if a category +load triggers a new loadable class </span><br><span class="line">* and a new loadable category attached to that class. </span><br><span class="line">*</span><br><span class="line">* Locking: loadMethodLock must be held by the caller </span><br><span class="line">*   All other locks must not be held.</span><br><span class="line">**********************************************************************/</span><br><span class="line">void call_load_methods(void)</span><br><span class="line">&#123;</span><br><span class="line">    static bool loading = NO;</span><br><span class="line">    bool more_categories;</span><br><span class="line"></span><br><span class="line">    loadMethodLock.assertLocked();</span><br><span class="line"></span><br><span class="line">    // Re-entrant calls do nothing; the outermost call will finish the job.</span><br><span class="line">    if (loading) return;</span><br><span class="line">    loading = YES;</span><br><span class="line"></span><br><span class="line">    void *pool = objc_autoreleasePoolPush();</span><br><span class="line"></span><br><span class="line">    do &#123;</span><br><span class="line">        // 1. Repeatedly call class +loads until there aren&apos;t any more</span><br><span class="line">        while (loadable_classes_used &gt; 0) &#123;</span><br><span class="line">            call_class_loads();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 2. Call category +loads ONCE</span><br><span class="line">        more_categories = call_category_loads();</span><br><span class="line"></span><br><span class="line">        // 3. Run more +loads if there are classes OR more untried categories</span><br><span class="line">    &#125; while (loadable_classes_used &gt; 0  ||  more_categories);</span><br><span class="line"></span><br><span class="line">    objc_autoreleasePoolPop(pool);</span><br><span class="line"></span><br><span class="line">    loading = NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="category-amp-extension区别"><a href="#category-amp-extension区别" class="headerlink" title="category &amp; extension区别"></a>category &amp; extension区别</h1><p>先说结论<code>extension</code>是编译期做的事情，<code>category</code>是运行期做的事情。写在<code>extension</code>里面的函数等等在编译期就已经确定，在运行时初始化的时候就存在。<code>category</code>是在<code>runtime</code>运行时才将函数等添加进类或者元类当中。</p>
+<h2 id="能给-NSObject-添加-Extension-吗"><a href="#能给-NSObject-添加-Extension-吗" class="headerlink" title="能给 NSObject 添加 Extension 吗"></a>能给 NSObject 添加 Extension 吗</h2><p>结论是可以，并且在<code>Extension</code>实现的函数在编译期间就会被添加进结构体中。首先编写以下代码</p>
+<pre><code>@implementation NSObject
+
+- (void)testFuntion
+{
+}
+
+@end</code></pre><p>通过<code>clang</code>将其便以为<code>cpp</code>来查看下。可以看到以下结构</p>
+<pre><code>static struct _class_ro_t _OBJC_METACLASS_RO_$_NSObject __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = {
+    3, sizeof(struct _class_t), sizeof(struct _class_t), 
+    (unsigned int)0, 
+    0, 
+    &quot;NSObject&quot;,
+    0, 
+    0, 
+    0, 
+    0, 
+    0, 
+};
+
+static struct _class_ro_t _OBJC_CLASS_RO_$_NSObject __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = {
+    2, __OFFSETOFIVAR__(struct NSObject, isa), sizeof(struct NSObject_IMPL), 
+    (unsigned int)0, 
+    0, 
+    &quot;NSObject&quot;,
+    (const struct _method_list_t *)&amp;_OBJC_$_INSTANCE_METHODS_NSObject,
+    (const struct _objc_protocol_list *)&amp;_OBJC_CLASS_PROTOCOLS_$_NSObject,
+    (const struct _ivar_list_t *)&amp;_OBJC_$_INSTANCE_VARIABLES_NSObject,
+    0, 
+    0, 
+};
+
+_OBJC_$_INSTANCE_METHODS_NSObject __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = {
+sizeof(_objc_method),
+1,
+{{(struct objc_selector *)"testFuntion", "v16@0:8", (void *)_I_NSObject_testFuntion}}</code></pre><p>};</p>
+<h1 id="IMP、SEL、Method的区别和使用场景"><a href="#IMP、SEL、Method的区别和使用场景" class="headerlink" title="IMP、SEL、Method的区别和使用场景"></a>IMP、SEL、Method的区别和使用场景</h1><p>这个没什么好说的</p>
+<ul>
+<li>IMP可以认为是持有了函数地址的指针，可以直接调用</li>
+<li>SEL可以认为是函数名的<code>hash</code>值，全局只存在一份。</li>
+<li>Method内部持有了<code>IMP</code> 函数名 和 函数返回类型。</li>
+</ul>
+<h1 id="load、initialize方法的区别什么？在继承关系中他们有什么区别"><a href="#load、initialize方法的区别什么？在继承关系中他们有什么区别" class="headerlink" title="load、initialize方法的区别什么？在继承关系中他们有什么区别"></a>load、initialize方法的区别什么？在继承关系中他们有什么区别</h1><p><code>load</code>上面有写过，在<code>_objc_init</code>时调用，调用顺序：父类 &gt; 子类 &gt; 分类，一个类只会调用一次。而<code>initialize</code>则是在对象第一次接受到消息的时候调用，具体源码可以查看<code>lookUpImpOrForward</code>。这个函数是由<code>objc_msgSend</code>调用的。其中有这样的代码片段</p>
+<pre><code>if (initialize &amp;&amp; !cls-&gt;isInitialized()) {
+    cls = initializeAndLeaveLocked(cls, inst, runtimeLock);
+    // runtimeLock may have been dropped but is now locked again
+
+    // If sel == initialize, class_initialize will send +initialize and 
+    // then the messenger will send +initialize again after this 
+    // procedure finishes. Of course, if this is not being called 
+    // from the messenger then it won&apos;t happen. 2778172
+}</code></pre><p>逐步跟随<code>initializeAndLeaveLocked</code> -&gt; <code>initializeAndMaybeRelock</code> -&gt; <code>initializeNonMetaClass</code>的调用链可以看到如下代码片段实现。</p>
+<pre><code>/***********************************************************************
+* class_initialize.  Send the &apos;+initialize&apos; message on demand to any
+* uninitialized class. Force initialization of superclasses first.
+**********************************************************************/
+void initializeNonMetaClass(Class cls)
+{
+    assert(!cls-&gt;isMetaClass());
+
+    Class supercls;
+    bool reallyInitialize = NO;
+
+    // Make sure super is done initializing BEFORE beginning to initialize cls.
+    // See note about deadlock above.
+    supercls = cls-&gt;superclass;
+    if (supercls  &amp;&amp;  !supercls-&gt;isInitialized()) {
+        initializeNonMetaClass(supercls);
+    }
+
+    ...
+    ...
+    ...
+        {
+            callInitialize(cls);
+        }
+    ...
+    ...
+    ...
+}</code></pre><p>根据代码分析得出结论为如果有父类同时父类有实现<code>initialize</code>同时父类并未调用过<code>initialize</code>时优先调用父类的<code>initialize</code>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-Runtime/" rel="tag"># iOS, Runtime</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/04/2020-03-04-算法/" rel="next" title="算法 - 双指针">
+                <i class="fa fa-chevron-left"></i> 算法 - 双指针
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Dylan">
+          <p class="site-author-name" itemprop="name">Dylan</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#class-copyIvarList-amp-class-copyPropertyList区别"><span class="nav-number">1.</span> <span class="nav-text">class_copyIvarList &amp; class_copyPropertyList区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#class-rw-t-和-class-ro-t-的区别"><span class="nav-number">2.</span> <span class="nav-text">class_rw_t 和 class_ro_t 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#category如何被加载的"><span class="nav-number">3.</span> <span class="nav-text">category如何被加载的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#两个category的同名方法的加载顺序"><span class="nav-number">3.1.</span> <span class="nav-text">两个category的同名方法的加载顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#category的load方法的加载顺序"><span class="nav-number">3.2.</span> <span class="nav-text">category的load方法的加载顺序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#category-amp-extension区别"><span class="nav-number">4.</span> <span class="nav-text">category &amp; extension区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#能给-NSObject-添加-Extension-吗"><span class="nav-number">4.1.</span> <span class="nav-text">能给 NSObject 添加 Extension 吗</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IMP、SEL、Method的区别和使用场景"><span class="nav-number">5.</span> <span class="nav-text">IMP、SEL、Method的区别和使用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#load、initialize方法的区别什么？在继承关系中他们有什么区别"><span class="nav-number">6.</span> <span class="nav-text">load、initialize方法的区别什么？在继承关系中他们有什么区别</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dylan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
